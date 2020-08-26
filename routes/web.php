@@ -30,6 +30,22 @@ Route::get('/points/sub/{merchant}/{ident}/{product}', 		'PointChangeController@
 Route::post('/points/sub-order', 							'PointChangeController@subOrder'); 		// 积分兑换 完成提交
 
 
+
+/**
+ * @version [<vector>] [< 进件的回调 >]
+ */
+Route::any('/netInCallback', function(){
+	die('success');
+}); 		
+/**
+ * @version [<vector>] [< 扫码的回调地址 >]
+ */
+Route::any('/payCallback', function(){
+	die('success');
+}); 
+
+
+
 //  聚合支付 标准进件 
 Route::get('/aggregate_bz', function(){
 	$a = new \App\Librarys\Aggregate\Client();
