@@ -108,15 +108,15 @@ class ApiJuHeController extends Controller
     		'bank_no'			=>	$request->bank_no,			// 银行账号
     		'bank_name'			=>	$request->bank_name,		// 银行开户名称
 
-    		'debit_fee'			=>	$request->debit_fee,		// 借记卡废率
-    		'debit_fee_limit'	=>	$request->debit_fee_limit,  // 借记卡封顶
-    		'credit_fee'		=>	$request->credit_fee,		// 贷记卡费率
-    		'd0_fee'			=>	$request->d0_fee,			// D0 额外手续费 费率
-    		'd0_fee_quota'		=>	$request->d0_fee_quota,		// D0 额外手续费 定额
-    		'union_credit_fee'	=>	$request->union_credit_fee,	// 云闪付贷记卡费率
-    		'union_debit_fee'	=>	$request->union_debit_fee,  // 云闪付借记卡费率
-    		'ali_fee'			=>	$request->ali_fee,			// 支付宝费率
-    		'wx_fee'			=>	$request->wx_fee,			// 微信费率
+    		'debit_fee'			=>	$request->debit_fee / 10000,		// 借记卡废率
+    		'debit_fee_limit'	=>	$request->debit_fee_limit,  		// 借记卡封顶
+    		'credit_fee'		=>	$request->credit_fee / 10000,		// 贷记卡费率
+    		'd0_fee'			=>	$request->d0_fee,					// D0 额外手续费 费率
+    		'd0_fee_quota'		=>	$request->d0_fee_quota,				// D0 额外手续费 定额
+    		'union_credit_fee'	=>	$request->union_credit_fee / 10000,	// 云闪付贷记卡费率
+    		'union_debit_fee'	=>	$request->union_debit_fee / 10000,  // 云闪付借记卡费率
+    		'ali_fee'			=>	$request->ali_fee / 10000,			// 支付宝费率
+    		'wx_fee'			=>	$request->wx_fee / 10000,			// 微信费率
 
     		'out_mercid'		=>	$request->out_mercid,		// 机构方商户标识
     		'sett_type'			=>	$request->sett_type,		// 结算类型
