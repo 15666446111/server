@@ -30,4 +30,9 @@ Route::group([
     $router->resource('point_products', 'PointProductController');
     // 积分兑换 申请订单
     $router->resource('point_orders',   'PointsOrderController');
+
+
+
+    // 聚合支付 商户进件
+    $router->resource('merchant_imports',   'MerchantsImportController');
 });

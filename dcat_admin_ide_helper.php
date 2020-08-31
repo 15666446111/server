@@ -75,25 +75,62 @@ namespace Dcat\Admin {
      * @property Grid\Column|Collection change_type
      * @property Grid\Column|Collection product_money
      * @property Grid\Column|Collection demo
-     * @property Grid\Column|Collection order
+     * @property Grid\Column|Collection product_id
      * @property Grid\Column|Collection parent_id
+     * @property Grid\Column|Collection order
      * @property Grid\Column|Collection uri
      * @property Grid\Column|Collection user_id
-     * @property Grid\Column|Collection menu_id
      * @property Grid\Column|Collection permission_id
+     * @property Grid\Column|Collection menu_id
      * @property Grid\Column|Collection http_method
      * @property Grid\Column|Collection http_path
      * @property Grid\Column|Collection role_id
      * @property Grid\Column|Collection password
      * @property Grid\Column|Collection remember_token
      * @property Grid\Column|Collection nofity_count
-     * @property Grid\Column|Collection attempts
-     * @property Grid\Column|Collection available_at
-     * @property Grid\Column|Collection payload
      * @property Grid\Column|Collection queue
+     * @property Grid\Column|Collection payload
+     * @property Grid\Column|Collection attempts
      * @property Grid\Column|Collection reserved_at
+     * @property Grid\Column|Collection available_at
+     * @property Grid\Column|Collection mobile
+     * @property Grid\Column|Collection merchant_name
+     * @property Grid\Column|Collection merchant_name_attr
+     * @property Grid\Column|Collection merchant_mcc
+     * @property Grid\Column|Collection merchant_prop
+     * @property Grid\Column|Collection merchant_city
+     * @property Grid\Column|Collection merchant_county
+     * @property Grid\Column|Collection merchant_address
+     * @property Grid\Column|Collection merchant_tel
+     * @property Grid\Column|Collection reg_no
+     * @property Grid\Column|Collection reg_expd
+     * @property Grid\Column|Collection card_no
+     * @property Grid\Column|Collection card_name
+     * @property Grid\Column|Collection card_expd
+     * @property Grid\Column|Collection bank_link
+     * @property Grid\Column|Collection bank_no
+     * @property Grid\Column|Collection bank_name
+     * @property Grid\Column|Collection user_email
+     * @property Grid\Column|Collection debit_fee
+     * @property Grid\Column|Collection debit_fee_limit
+     * @property Grid\Column|Collection credit_fee
+     * @property Grid\Column|Collection d0_fee
+     * @property Grid\Column|Collection d0_fee_quota
+     * @property Grid\Column|Collection union_credit_fee
+     * @property Grid\Column|Collection union_debit_fee
+     * @property Grid\Column|Collection ali_fee
+     * @property Grid\Column|Collection wx_fee
+     * @property Grid\Column|Collection out_mercid
+     * @property Grid\Column|Collection sett_type
+     * @property Grid\Column|Collection pic_xy
+     * @property Grid\Column|Collection pic_zz
+     * @property Grid\Column|Collection pic_yhk
+     * @property Grid\Column|Collection pic_sfz1
+     * @property Grid\Column|Collection pic_sfz2
+     * @property Grid\Column|Collection pic_jj
+     * @property Grid\Column|Collection pic_mt
+     * @property Grid\Column|Collection pic_nj
      * @property Grid\Column|Collection token
-     * @property Grid\Column|Collection product_id
      * @property Grid\Column|Collection email_verified_at
      *
      * @method Grid\Column|Collection id(string $label = null)
@@ -160,25 +197,62 @@ namespace Dcat\Admin {
      * @method Grid\Column|Collection change_type(string $label = null)
      * @method Grid\Column|Collection product_money(string $label = null)
      * @method Grid\Column|Collection demo(string $label = null)
-     * @method Grid\Column|Collection order(string $label = null)
+     * @method Grid\Column|Collection product_id(string $label = null)
      * @method Grid\Column|Collection parent_id(string $label = null)
+     * @method Grid\Column|Collection order(string $label = null)
      * @method Grid\Column|Collection uri(string $label = null)
      * @method Grid\Column|Collection user_id(string $label = null)
-     * @method Grid\Column|Collection menu_id(string $label = null)
      * @method Grid\Column|Collection permission_id(string $label = null)
+     * @method Grid\Column|Collection menu_id(string $label = null)
      * @method Grid\Column|Collection http_method(string $label = null)
      * @method Grid\Column|Collection http_path(string $label = null)
      * @method Grid\Column|Collection role_id(string $label = null)
      * @method Grid\Column|Collection password(string $label = null)
      * @method Grid\Column|Collection remember_token(string $label = null)
      * @method Grid\Column|Collection nofity_count(string $label = null)
-     * @method Grid\Column|Collection attempts(string $label = null)
-     * @method Grid\Column|Collection available_at(string $label = null)
-     * @method Grid\Column|Collection payload(string $label = null)
      * @method Grid\Column|Collection queue(string $label = null)
+     * @method Grid\Column|Collection payload(string $label = null)
+     * @method Grid\Column|Collection attempts(string $label = null)
      * @method Grid\Column|Collection reserved_at(string $label = null)
+     * @method Grid\Column|Collection available_at(string $label = null)
+     * @method Grid\Column|Collection mobile(string $label = null)
+     * @method Grid\Column|Collection merchant_name(string $label = null)
+     * @method Grid\Column|Collection merchant_name_attr(string $label = null)
+     * @method Grid\Column|Collection merchant_mcc(string $label = null)
+     * @method Grid\Column|Collection merchant_prop(string $label = null)
+     * @method Grid\Column|Collection merchant_city(string $label = null)
+     * @method Grid\Column|Collection merchant_county(string $label = null)
+     * @method Grid\Column|Collection merchant_address(string $label = null)
+     * @method Grid\Column|Collection merchant_tel(string $label = null)
+     * @method Grid\Column|Collection reg_no(string $label = null)
+     * @method Grid\Column|Collection reg_expd(string $label = null)
+     * @method Grid\Column|Collection card_no(string $label = null)
+     * @method Grid\Column|Collection card_name(string $label = null)
+     * @method Grid\Column|Collection card_expd(string $label = null)
+     * @method Grid\Column|Collection bank_link(string $label = null)
+     * @method Grid\Column|Collection bank_no(string $label = null)
+     * @method Grid\Column|Collection bank_name(string $label = null)
+     * @method Grid\Column|Collection user_email(string $label = null)
+     * @method Grid\Column|Collection debit_fee(string $label = null)
+     * @method Grid\Column|Collection debit_fee_limit(string $label = null)
+     * @method Grid\Column|Collection credit_fee(string $label = null)
+     * @method Grid\Column|Collection d0_fee(string $label = null)
+     * @method Grid\Column|Collection d0_fee_quota(string $label = null)
+     * @method Grid\Column|Collection union_credit_fee(string $label = null)
+     * @method Grid\Column|Collection union_debit_fee(string $label = null)
+     * @method Grid\Column|Collection ali_fee(string $label = null)
+     * @method Grid\Column|Collection wx_fee(string $label = null)
+     * @method Grid\Column|Collection out_mercid(string $label = null)
+     * @method Grid\Column|Collection sett_type(string $label = null)
+     * @method Grid\Column|Collection pic_xy(string $label = null)
+     * @method Grid\Column|Collection pic_zz(string $label = null)
+     * @method Grid\Column|Collection pic_yhk(string $label = null)
+     * @method Grid\Column|Collection pic_sfz1(string $label = null)
+     * @method Grid\Column|Collection pic_sfz2(string $label = null)
+     * @method Grid\Column|Collection pic_jj(string $label = null)
+     * @method Grid\Column|Collection pic_mt(string $label = null)
+     * @method Grid\Column|Collection pic_nj(string $label = null)
      * @method Grid\Column|Collection token(string $label = null)
-     * @method Grid\Column|Collection product_id(string $label = null)
      * @method Grid\Column|Collection email_verified_at(string $label = null)
      */
     class Grid {}
@@ -250,25 +324,62 @@ namespace Dcat\Admin {
      * @property Show\Field|Collection change_type
      * @property Show\Field|Collection product_money
      * @property Show\Field|Collection demo
-     * @property Show\Field|Collection order
+     * @property Show\Field|Collection product_id
      * @property Show\Field|Collection parent_id
+     * @property Show\Field|Collection order
      * @property Show\Field|Collection uri
      * @property Show\Field|Collection user_id
-     * @property Show\Field|Collection menu_id
      * @property Show\Field|Collection permission_id
+     * @property Show\Field|Collection menu_id
      * @property Show\Field|Collection http_method
      * @property Show\Field|Collection http_path
      * @property Show\Field|Collection role_id
      * @property Show\Field|Collection password
      * @property Show\Field|Collection remember_token
      * @property Show\Field|Collection nofity_count
-     * @property Show\Field|Collection attempts
-     * @property Show\Field|Collection available_at
-     * @property Show\Field|Collection payload
      * @property Show\Field|Collection queue
+     * @property Show\Field|Collection payload
+     * @property Show\Field|Collection attempts
      * @property Show\Field|Collection reserved_at
+     * @property Show\Field|Collection available_at
+     * @property Show\Field|Collection mobile
+     * @property Show\Field|Collection merchant_name
+     * @property Show\Field|Collection merchant_name_attr
+     * @property Show\Field|Collection merchant_mcc
+     * @property Show\Field|Collection merchant_prop
+     * @property Show\Field|Collection merchant_city
+     * @property Show\Field|Collection merchant_county
+     * @property Show\Field|Collection merchant_address
+     * @property Show\Field|Collection merchant_tel
+     * @property Show\Field|Collection reg_no
+     * @property Show\Field|Collection reg_expd
+     * @property Show\Field|Collection card_no
+     * @property Show\Field|Collection card_name
+     * @property Show\Field|Collection card_expd
+     * @property Show\Field|Collection bank_link
+     * @property Show\Field|Collection bank_no
+     * @property Show\Field|Collection bank_name
+     * @property Show\Field|Collection user_email
+     * @property Show\Field|Collection debit_fee
+     * @property Show\Field|Collection debit_fee_limit
+     * @property Show\Field|Collection credit_fee
+     * @property Show\Field|Collection d0_fee
+     * @property Show\Field|Collection d0_fee_quota
+     * @property Show\Field|Collection union_credit_fee
+     * @property Show\Field|Collection union_debit_fee
+     * @property Show\Field|Collection ali_fee
+     * @property Show\Field|Collection wx_fee
+     * @property Show\Field|Collection out_mercid
+     * @property Show\Field|Collection sett_type
+     * @property Show\Field|Collection pic_xy
+     * @property Show\Field|Collection pic_zz
+     * @property Show\Field|Collection pic_yhk
+     * @property Show\Field|Collection pic_sfz1
+     * @property Show\Field|Collection pic_sfz2
+     * @property Show\Field|Collection pic_jj
+     * @property Show\Field|Collection pic_mt
+     * @property Show\Field|Collection pic_nj
      * @property Show\Field|Collection token
-     * @property Show\Field|Collection product_id
      * @property Show\Field|Collection email_verified_at
      *
      * @method Show\Field|Collection id(string $label = null)
@@ -335,25 +446,62 @@ namespace Dcat\Admin {
      * @method Show\Field|Collection change_type(string $label = null)
      * @method Show\Field|Collection product_money(string $label = null)
      * @method Show\Field|Collection demo(string $label = null)
-     * @method Show\Field|Collection order(string $label = null)
+     * @method Show\Field|Collection product_id(string $label = null)
      * @method Show\Field|Collection parent_id(string $label = null)
+     * @method Show\Field|Collection order(string $label = null)
      * @method Show\Field|Collection uri(string $label = null)
      * @method Show\Field|Collection user_id(string $label = null)
-     * @method Show\Field|Collection menu_id(string $label = null)
      * @method Show\Field|Collection permission_id(string $label = null)
+     * @method Show\Field|Collection menu_id(string $label = null)
      * @method Show\Field|Collection http_method(string $label = null)
      * @method Show\Field|Collection http_path(string $label = null)
      * @method Show\Field|Collection role_id(string $label = null)
      * @method Show\Field|Collection password(string $label = null)
      * @method Show\Field|Collection remember_token(string $label = null)
      * @method Show\Field|Collection nofity_count(string $label = null)
-     * @method Show\Field|Collection attempts(string $label = null)
-     * @method Show\Field|Collection available_at(string $label = null)
-     * @method Show\Field|Collection payload(string $label = null)
      * @method Show\Field|Collection queue(string $label = null)
+     * @method Show\Field|Collection payload(string $label = null)
+     * @method Show\Field|Collection attempts(string $label = null)
      * @method Show\Field|Collection reserved_at(string $label = null)
+     * @method Show\Field|Collection available_at(string $label = null)
+     * @method Show\Field|Collection mobile(string $label = null)
+     * @method Show\Field|Collection merchant_name(string $label = null)
+     * @method Show\Field|Collection merchant_name_attr(string $label = null)
+     * @method Show\Field|Collection merchant_mcc(string $label = null)
+     * @method Show\Field|Collection merchant_prop(string $label = null)
+     * @method Show\Field|Collection merchant_city(string $label = null)
+     * @method Show\Field|Collection merchant_county(string $label = null)
+     * @method Show\Field|Collection merchant_address(string $label = null)
+     * @method Show\Field|Collection merchant_tel(string $label = null)
+     * @method Show\Field|Collection reg_no(string $label = null)
+     * @method Show\Field|Collection reg_expd(string $label = null)
+     * @method Show\Field|Collection card_no(string $label = null)
+     * @method Show\Field|Collection card_name(string $label = null)
+     * @method Show\Field|Collection card_expd(string $label = null)
+     * @method Show\Field|Collection bank_link(string $label = null)
+     * @method Show\Field|Collection bank_no(string $label = null)
+     * @method Show\Field|Collection bank_name(string $label = null)
+     * @method Show\Field|Collection user_email(string $label = null)
+     * @method Show\Field|Collection debit_fee(string $label = null)
+     * @method Show\Field|Collection debit_fee_limit(string $label = null)
+     * @method Show\Field|Collection credit_fee(string $label = null)
+     * @method Show\Field|Collection d0_fee(string $label = null)
+     * @method Show\Field|Collection d0_fee_quota(string $label = null)
+     * @method Show\Field|Collection union_credit_fee(string $label = null)
+     * @method Show\Field|Collection union_debit_fee(string $label = null)
+     * @method Show\Field|Collection ali_fee(string $label = null)
+     * @method Show\Field|Collection wx_fee(string $label = null)
+     * @method Show\Field|Collection out_mercid(string $label = null)
+     * @method Show\Field|Collection sett_type(string $label = null)
+     * @method Show\Field|Collection pic_xy(string $label = null)
+     * @method Show\Field|Collection pic_zz(string $label = null)
+     * @method Show\Field|Collection pic_yhk(string $label = null)
+     * @method Show\Field|Collection pic_sfz1(string $label = null)
+     * @method Show\Field|Collection pic_sfz2(string $label = null)
+     * @method Show\Field|Collection pic_jj(string $label = null)
+     * @method Show\Field|Collection pic_mt(string $label = null)
+     * @method Show\Field|Collection pic_nj(string $label = null)
      * @method Show\Field|Collection token(string $label = null)
-     * @method Show\Field|Collection product_id(string $label = null)
      * @method Show\Field|Collection email_verified_at(string $label = null)
      */
     class Show {}

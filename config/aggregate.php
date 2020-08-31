@@ -12,8 +12,16 @@ return [
     | the usual Laravel view path has already been registered for you.
     |
     */
+    'orgNumber'     =>  env('ORG_NUMBER', ''),
 
-    'merchantNo' =>  env('MERCHANT_NO', '11610265311000a'),
+    'merchantNo'    =>  env('MERCHANT_NO', '11610265311000a'),
+
+    'userEmail'     =>  env('USER_EMAIL', ''),
+
+    'netPrivateStr' =>  env('NET_PRIVATE_STR', ''),
+
+
+
 
     'rsaKey'     =>  env('RSA_KEY', ''),
 
