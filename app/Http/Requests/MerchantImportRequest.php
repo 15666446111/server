@@ -34,7 +34,7 @@ class MerchantImportRequest extends BaseRequests
             
             // 商户设置 
             'mobile'            =>  'required|digits_between:11,11',                                //  商户手机号 必填
-            'merchant_name'     =>  'required|between:4,30',                                        //  商户名称
+            'merchant_name'     =>  'required|between:2,6',                                         //  商户名称
             'merchant_name_attr'=>  'required|between:4,30',                                        //  商户简称
             'merchant_mcc'      =>  'required',                                                     //  商户MCC
             'merchant_prop'     =>  'required',                                                     //  归属省
