@@ -20,7 +20,7 @@ return [
 
     'netPrivateStr' =>  env('NET_PRIVATE_STR', ''),
 
-
+    
 
 
     'rsaKey'     =>  env('RSA_KEY', ''),

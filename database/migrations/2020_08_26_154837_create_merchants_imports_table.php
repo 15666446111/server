@@ -53,8 +53,6 @@ class CreateMerchantsImportsTable extends Migration
 
             $table->string('bank_name')->nullable()->comment('银行开户名称');
 
-            $table->string('user_email')->nullable()->comment('商户管理员EMAIL');
-
             $table->smallInteger('debit_fee')->defaule(0)->comment('借记费率');
 
             $table->smallInteger('debit_fee_limit')->defaule(0)->comment('借记封顶额');

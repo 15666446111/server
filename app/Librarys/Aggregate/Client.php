@@ -158,6 +158,8 @@ class Client
 			$arrs[] = array('name' => $key, 'contents' => in_array($key, ['SFZ1', 'SFZ2', 'YHK', 'CDMT1', 'ZZ1', 'CDJJ1', 'CDNJ1']) ? fopen($value, 'r') : $value);
 		}
 
+		dd(json_encode($arrs));
+
 		$client     = new GuzzClient();
 
 		$result 	= $client->request('POST', $this->url, [
