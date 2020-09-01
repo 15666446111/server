@@ -31,6 +31,7 @@ class MerchantImportRequest extends BaseRequests
              */
             'no'                =>  'required|digits_between:8,30|unique:merchants_imports,no',     //  下游订单号
             'type'              =>  'required|in:1,2',                                              //  商户类型 必须为 1 2中的其中一个
+            'out_mercid'        =>  'required',                                                     //  外部机构方  微服务下发的商户id
             
             // 商户设置 
             'mobile'            =>  'required|digits_between:11,11',                                //  商户手机号 必填

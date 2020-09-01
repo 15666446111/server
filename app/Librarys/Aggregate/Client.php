@@ -139,7 +139,7 @@ class Client
 		$data['aliFee']			=	(string)($this->data->ali_fee / 10000);
 		$data['wxFee']			=	(string)($this->data->wx_fee / 10000);
 
-		$data['outMercId']		=	config('aggregate.merchantNo');
+		$data['outMercId']		=	$this->data->out_mercid;
 		$data['settType']		=	'T1';
 
 		$data['SFZ1']			=	storage_path('app/public/'.$this->data->pic_sfz1);
