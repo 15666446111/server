@@ -152,8 +152,6 @@ class Client
 		 */
 		$data['sign'] = $this->netInSign($data);
 
-		dd($data);
-
 		$arrs = array();
 
 		foreach ($data as $key => $value) {
@@ -188,8 +186,6 @@ class Client
 			if(in_array($key, ['SFZ1', 'SFZ2', 'YHK', 'CDMT1', 'ZZ1', 'CDJJ1', 'CDNJ1'])) unset($params[$key]);
 		}
 
-		ksort($params);
-
 		$params = json_encode($params, JSON_UNESCAPED_UNICODE);
 
 	   	$str = chunk_split(config('aggregate.netPrivateStr'), 64, "\n"); 	// 机构私钥--自行在类中或者文件中封装
@@ -202,7 +198,7 @@ class Client
 	   	
 	   	openssl_free_key($pi_key);
 
-	   	return base64_encode ($binary_signature);
+	   	return base64_encode($binary_signature);
 	}
 }
 
