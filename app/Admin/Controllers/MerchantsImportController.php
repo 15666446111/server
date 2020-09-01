@@ -19,44 +19,48 @@ class MerchantsImportController extends AdminController
     {
         return Grid::make(new MerchantsImport(), function (Grid $grid) {
             $grid->id->sortable();
+            
             $grid->order_no;
-            $grid->mobile;
+
             $grid->merchant_name;
-            $grid->merchant_name_attr;
-            $grid->merchant_mcc;
-            $grid->merchant_prop;
-            $grid->merchant_city;
-            $grid->merchant_county;
-            $grid->merchant_address;
-            $grid->merchant_tel;
-            $grid->reg_no;
-            $grid->reg_expd;
-            $grid->card_no;
-            $grid->card_name;
-            $grid->card_expd;
-            $grid->bank_link;
-            $grid->bank_no;
-            $grid->bank_name;
-            $grid->user_email;
-            $grid->debit_fee;
-            $grid->debit_fee_limit;
-            $grid->credit_fee;
-            $grid->d0_fee;
-            $grid->d0_fee_quota;
-            $grid->union_credit_fee;
-            $grid->union_debit_fee;
-            $grid->ali_fee;
-            $grid->wx_fee;
-            $grid->out_mercid;
-            $grid->sett_type;
-            $grid->pic_xy;
-            $grid->pic_zz;
-            $grid->pic_yhk;
-            $grid->pic_sfz1;
-            $grid->pic_sfz2;
-            $grid->pic_jj;
-            $grid->pic_mt;
-            $grid->pic_nj;
+            
+            $grid->mobile;
+
+            //$grid->merchant_name_attr;
+            //$grid->merchant_mcc;
+            //$grid->merchant_prop;
+            //$grid->merchant_city;
+            //$grid->merchant_county;
+            //$grid->merchant_address;
+            //$grid->merchant_tel;
+            //$grid->reg_no;
+            //$grid->reg_expd;
+            //$grid->card_no;
+            //$grid->card_name;
+            //$grid->card_expd;
+            //$grid->bank_link;
+            //$grid->bank_no;
+            //$grid->bank_name;
+            
+            //$grid->debit_fee;
+            //$grid->debit_fee_limit;
+            //$grid->credit_fee;
+            //$grid->d0_fee;
+            //$grid->d0_fee_quota;
+            //$grid->union_credit_fee;
+            //$grid->union_debit_fee;
+            //$grid->ali_fee;
+            //$grid->wx_fee;
+            //$grid->out_mercid;
+            //$grid->sett_type;
+            //$grid->pic_xy;
+            //$grid->pic_zz;
+            //$grid->pic_yhk;
+            //$grid->pic_sfz1;
+            //$grid->pic_sfz2;
+            //$grid->pic_jj;
+            //$grid->pic_mt;
+            //$grid->pic_nj;
             $grid->created_at;
             $grid->updated_at->sortable();
         
@@ -77,47 +81,67 @@ class MerchantsImportController extends AdminController
     protected function detail($id)
     {
         return Show::make($id, new MerchantsImport(), function (Show $show) {
-            $show->id;
-            $show->order_no;
-            $show->mobile;
-            $show->merchant_name;
-            $show->merchant_name_attr;
-            $show->merchant_mcc;
-            $show->merchant_prop;
-            $show->merchant_city;
-            $show->merchant_county;
-            $show->merchant_address;
-            $show->merchant_tel;
-            $show->reg_no;
-            $show->reg_expd;
-            $show->card_no;
-            $show->card_name;
-            $show->card_expd;
-            $show->bank_link;
-            $show->bank_no;
-            $show->bank_name;
-            $show->user_email;
-            $show->debit_fee;
-            $show->debit_fee_limit;
-            $show->credit_fee;
-            $show->d0_fee;
-            $show->d0_fee_quota;
-            $show->union_credit_fee;
-            $show->union_debit_fee;
-            $show->ali_fee;
-            $show->wx_fee;
-            $show->out_mercid;
-            $show->sett_type;
-            $show->pic_xy;
-            $show->pic_zz;
-            $show->pic_yhk;
-            $show->pic_sfz1;
-            $show->pic_sfz2;
-            $show->pic_jj;
-            $show->pic_mt;
-            $show->pic_nj;
-            $show->created_at;
-            $show->updated_at;
+
+            $show->row(function (Show\Row $show) {
+                $show->width(6)->order_no;
+                $show->width(6)->merchant_name;
+                $show->width(6)->mobile;
+                $show->width(6)->merchant_name_attr;
+                $show->width(6)->merchant_mcc;
+                $show->width(6)->merchant_tel;
+                $show->width(6)->merchant_prop;
+                $show->width(6)->merchant_city;
+                $show->width(6)->merchant_county;
+                $show->width(6)->merchant_address;
+
+                $show->width(6)->reg_no;
+                $show->width(6)->reg_expd;
+                $show->width(6)->card_no;
+                $show->width(6)->card_name;
+
+
+                $show->card_expd;
+                $show->bank_link;
+                $show->bank_no;
+                $show->bank_name;
+                $show->user_email;
+
+
+
+
+                $show->out_mercid;
+                $show->sett_type;
+
+                $show->created_at;
+                $show->updated_at;
+            });
+
+            
+
+            $show->row(function (Show\Row $show) {
+                $show->newline('111');
+
+                $show->width(6)->debit_fee;
+                $show->width(6)->debit_fee_limit;
+                $show->width(6)->credit_fee;
+                $show->width(6)->d0_fee;
+                $show->width(6)->d0_fee_quota;
+                $show->width(6)->union_credit_fee;
+                $show->width(6)->union_debit_fee;
+                $show->width(6)->ali_fee;
+                $show->width(6)->wx_fee;
+            });
+
+            $show->row(function (Show\Row $show) {
+                $show->width(6)->pic_xy->image();
+                $show->width(6)->pic_zz->image();
+                $show->width(6)->pic_yhk->image();
+                $show->width(6)->pic_sfz1->image();
+                $show->width(6)->pic_sfz2->image();
+                $show->width(6)->pic_jj->image();
+                $show->width(6)->pic_mt->image();
+                $show->width(6)->pic_nj->image();
+            });
         });
     }
 

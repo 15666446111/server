@@ -85,7 +85,7 @@ class ApiJuHeController extends Controller
 
     	### 写入数据库
     	$imports = \App\MerchantsImport::create([
-    		'order_no'			=>	'server'.time().rand(100000,999999),//	生成请求订单号
+    		'order_no'			=>	'CHB'.time().rand(1000,9999),//	生成请求订单号
     		'no'				=>	$request->no,						//	下游订单号
     		'mobile'			=>	$request->mobile,					//  商户手机号
     		'merchant_name'		=>	$request->merchant_name, 			// 	商户名称
