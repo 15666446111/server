@@ -158,6 +158,8 @@ class Client
 			$arrs[] = array('name' => $key, 'contents' => in_array($key, ['SFZ1', 'SFZ2', 'YHK', 'CDMT1', 'ZZ1', 'CDJJ1', 'CDNJ1']) ? fopen($value, 'r') : $value);
 		}
 
+		echo $this->url."<br/>";
+
 		$client     = new GuzzClient();
 
 		$result 	= $client->request('POST', $this->url, [
@@ -181,8 +183,7 @@ class Client
 	 */
 	public function netInSign($params)
 	{
-
-		echo config('aggregate.netPrivateStr');
+		$private_key = file_get_contents(storage_path('app/public/rsa/net/rsa_private_key.pem'));
 
 		foreach ($params as $key => $value) {
 			if($value == "" && $value !== 0) unset($params[$key]);
@@ -190,13 +191,9 @@ class Client
 		}
 
 		$params = json_encode($params, JSON_UNESCAPED_UNICODE);
-
+	   	
 		echo $params;
 
-	   	$str = chunk_split(config('aggregate.netPrivateStr'), 64, "\n"); 	// 机构私钥--自行在类中或者文件中封装
-	   	
-	   	$private_key = "-----BEGIN RSA PRIVATE KEY-----\n$str-----END RSA PRIVATE KEY-----";
-	   	
 	   	$pi_key =  openssl_get_privatekey($private_key);
 	   	
 	   	openssl_sign($params, $binary_signature, $pi_key, OPENSSL_ALGO_MD5);
