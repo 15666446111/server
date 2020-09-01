@@ -181,12 +181,17 @@ class Client
 	 */
 	public function netInSign($params)
 	{
+
+		echo config('aggregate.netPrivateStr');
+
 		foreach ($params as $key => $value) {
 			if($value == "" && $value !== 0) unset($params[$key]);
 			if(in_array($key, ['SFZ1', 'SFZ2', 'YHK', 'CDMT1', 'ZZ1', 'CDJJ1', 'CDNJ1'])) unset($params[$key]);
 		}
 
 		$params = json_encode($params, JSON_UNESCAPED_UNICODE);
+
+		echo $params;
 
 	   	$str = chunk_split(config('aggregate.netPrivateStr'), 64, "\n"); 	// 机构私钥--自行在类中或者文件中封装
 	   	
@@ -197,6 +202,8 @@ class Client
 	   	openssl_sign($params, $binary_signature, $pi_key, OPENSSL_ALGO_MD5);
 	   	
 	   	openssl_free_key($pi_key);
+
+	   	echo base64_encode($binary_signature);
 
 	   	return base64_encode($binary_signature);
 	}
