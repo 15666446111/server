@@ -2,55 +2,39 @@
 
 namespace App\Librarys\Aggregate;
 
+use App\MerchantsImport;
 use GuzzleHttp\Client as GuzzClient;
 
 class Query
 {
-	/**
-	 * [$merchant 商户机构号]
-	 * @var [string]
-	 */
-	protected	$merchant;
 
 	/**
-	 * [$rsaKey 渠道密钥]
-	 * @var [string]
+	 * [$data 商户提交的进件信息 ]
+	 * @var [ merchants orm ]
 	 */
-	protected	$rsaKey;
+	protected 	$data;
 
 
 	/**
-	 * [$requestUrl 申请地址url ]
-	 * @var [type]
+	 * [$url 请求的url 地址 ]
+	 * @var [ string ]
 	 */
-	protected 	$requestUrl;
+	protected	$url;
 
 
 	/**
-	 * [$privateStr 商户私钥]
-	 * @var [type]
+	 * @Author    Pudding
+	 * @DateTime  2020-09-01
+	 * @copyright [copyright]
+	 * @license   [license]
+	 * @version   [ init ]
+	 * @param     MerchantsImport $params [description]
 	 */
-	protected 	$privateStr;
-
-
-	protected   $mer_id;
-
-
-	//http://116.228.47.74:18480/merchant_agent_foreign  进件接口地址
-	//https://116.228.47.74:7443/transaction_agent/scan/trans 扫码接口地址
-	//https://116.228.47.74:7443/transaction_agent/scan/separ 分账接口地址
-
-	public function __construct()
+	public function __construct(MerchantsImport $params)
 	{
-		$this->merchant = config('aggregate.merchantNo');
+		$this->data = $params;
 
-		$this->rsaKey   = config('aggregate.rsaKey');
-
-		$this->requestUrl = config('aggregate.requestUrl');
-
-		$this->privateStr = config('aggregate.privateStr');
-
-		$this->mer_id  	  = '999451658130004';//'999451957320001'; 
+		$this->url  = 'https://qzmerc.chinaebi.com:18480/merchant_agent_foreign'.'/rest/merchantInfo/query';
 	}
 
 
@@ -65,21 +49,9 @@ class Query
 	 */
 	public function query()
 	{
+		$bodyData = array('orgNumber' => config('aggregate.orgNumber'), 'dyMchNo' => $this->data->merchant_number );
 
-		$url = 'http://116.228.47.74:18480/merchant_agent_foreign'.'/rest/merchantInfo/query';
-
-		$orderNo = "A".time();
-
-		//file_put_contents("./a.text", $orderNo);
-
-
-
-		$bodyData = array(
-			'orgNumber'		=>	'999',
-			'dyMchNo'		=>	$this->mer_id
-		);
-
-		$this->send($url, $bodyData);
+		return $this->send($bodyData);
 	}
 
 
@@ -91,33 +63,28 @@ class Query
 	 * @version   [ 信息发送请求 ]
 	 * @return    [type]      [description]
 	 */
-	public function send($url, $data)
+	public function send($data)
 	{	
 		/**
 		 * 进件参数加密
 		 */
 		$data['sign'] = $this->querySign($data);
 
-		echo json_encode($data);
-		//dd($head);
 		$arrs = array();
-		foreach ($data as $key => $value) {
 
-			$arrs[] = array('name' => $key, 'contents' => in_array($key, ['SFZ1', 'SFZ2', 'YHK', 'CDMT1']) ? fopen($value, 'r') : $value);
-			
+		foreach ($data as $key => $value) {
+			$arrs[] = array('name' => $key, 'contents' => $value);
 		}
-		//dd($arrs);
-		//dd($arrs);
 
 		$client     = new GuzzClient();
 
-		$result 	= $client->request('POST', $url, [
-		    'json' 	=> $data,
-		]);
+		$result 	= $client->request('POST', $this->url, [ 'json' 	=> $data ]);
 
         $content 	= $result->getBody()->getContents();
 
         dd($content);
+
+        return $content;
 	}
 
 
@@ -132,26 +99,23 @@ class Query
 	 */
 	public function querySign($params)
 	{
+		$private_key = file_get_contents(storage_path('app/public/rsa/net/rsa_private_key.pem'));
+
 		foreach ($params as $key => $value) {
 			if($value == "" && $value !== 0) unset($params[$key]);
-			if(in_array($key, ['SFZ1', 'SFZ2', 'YHK', 'CDMT1'])) unset($params[$key]);
 		}
 
 		ksort($params);
 
 		$params = json_encode($params, JSON_UNESCAPED_UNICODE);
 
-	   	$str = chunk_split($this->privateStr, 64, "\n"); 	// $privateStr 机构私钥--自行在类中或者文件中封装
-	   	
-	   	$private_key = "-----BEGIN RSA PRIVATE KEY-----\n$str-----END RSA PRIVATE KEY-----";
-	   	
 	   	$pi_key =  openssl_get_privatekey($private_key);
 	   	
 	   	openssl_sign($params, $binary_signature, $pi_key, OPENSSL_ALGO_MD5);
 	   	
 	   	openssl_free_key($pi_key);
 
-	   	return base64_encode ($binary_signature);
+	   	return base64_encode($binary_signature);
 	}
 }
 

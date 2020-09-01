@@ -129,15 +129,15 @@ class Client
 		$data['stlOac']		=	$this->data->bank_no;
 		$data['bnkAcnm']	=	$this->data->bank_name;
 
-		$data['debitFee']		=	$this->data->debit_fee;
-		$data['debitFeeLimit']	=	$this->data->debit_fee_limit;
-		$data['creditFee']		=	$this->data->credit_fee;
-		$data['d0Fee']			=	$this->data->d0_fee;
-		$data['d0FeeQuota']		=	$this->data->d0_fee_quota;
-		$data['unionCreditFee']	=	$this->data->union_credit_fee;
-		$data['unionDebitFee']	=	$this->data->union_debit_fee;
-		$data['aliFee']			=	$this->data->ali_fee;
-		$data['wxFee']			=	$this->data->wx_fee;
+		$data['debitFee']		=	(string)($this->data->debit_fee / 10000);
+		$data['debitFeeLimit']	=	(string)$this->data->debit_fee_limit;
+		$data['creditFee']		=	(string)($this->data->credit_fee / 10000);
+		//$data['d0Fee']			=	(string)$this->data->d0_fee;
+		//$data['d0FeeQuota']		=	(string)$this->data->d0_fee_quota;
+		//$data['unionCreditFee']	=	(string)$this->data->union_credit_fee;
+		//$data['unionDebitFee']	=	(string)$this->data->union_debit_fee;
+		$data['aliFee']			=	(string)($this->data->ali_fee / 10000);
+		$data['wxFee']			=	(string)($this->data->wx_fee / 10000);
 
 		$data['outMercId']		=	config('aggregate.merchantNo');
 		$data['settType']		=	'T1';
@@ -158,13 +158,9 @@ class Client
 			$arrs[] = array('name' => $key, 'contents' => in_array($key, ['SFZ1', 'SFZ2', 'YHK', 'CDMT1', 'ZZ1', 'CDJJ1', 'CDNJ1']) ? fopen($value, 'r') : $value);
 		}
 
-		echo $this->url."<br/>";
-
 		$client     = new GuzzClient();
 
-		$result 	= $client->request('POST', $this->url, [
-		    'multipart' => $arrs,
-		]);
+		$result 	= $client->request('POST', $this->url, [ 'multipart' => $arrs ]);
 
         $content 	= $result->getBody()->getContents();
 
@@ -183,24 +179,24 @@ class Client
 	 */
 	public function netInSign($params)
 	{
-		$private_key = file_get_contents(storage_path('app/public/rsa/net/rsa_private_key.pem'));
-
 		foreach ($params as $key => $value) {
 			if($value == "" && $value !== 0) unset($params[$key]);
 			if(in_array($key, ['SFZ1', 'SFZ2', 'YHK', 'CDMT1', 'ZZ1', 'CDJJ1', 'CDNJ1'])) unset($params[$key]);
 		}
 
+		$private_key = file_get_contents(storage_path('app/public/rsa/net/rsa_private_key.pem'));
+
+		ksort($params);
+
 		$params = json_encode($params, JSON_UNESCAPED_UNICODE);
-	   	
-		echo $params;
+
+		print_r($params);
 
 	   	$pi_key =  openssl_get_privatekey($private_key);
 	   	
 	   	openssl_sign($params, $binary_signature, $pi_key, OPENSSL_ALGO_MD5);
 	   	
 	   	openssl_free_key($pi_key);
-
-	   	echo base64_encode($binary_signature);
 
 	   	return base64_encode($binary_signature);
 	}

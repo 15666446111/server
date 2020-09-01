@@ -20,3 +20,5 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::post('merchant-import',    'ApiJuHeController@merchantImport');						//	 微服务 商户进件 
 
+Route::post('merchant-query',     'ApiJuHeController@merchantQuery');						//	 微服务 商户进件 - 商户查询
+

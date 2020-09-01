@@ -12,18 +12,6 @@ class Edit
 	 */
 	protected	$merchant;
 
-	/**
-	 * [$rsaKey 渠道密钥]
-	 * @var [string]
-	 */
-	protected	$rsaKey;
-
-
-	/**
-	 * [$requestUrl 申请地址url ]
-	 * @var [type]
-	 */
-	protected 	$requestUrl;
 
 
 	/**
@@ -36,14 +24,11 @@ class Edit
 	//http://116.228.47.74:18480/merchant_agent_foreign  进件接口地址
 	//https://116.228.47.74:7443/transaction_agent/scan/trans 扫码接口地址
 	//https://116.228.47.74:7443/transaction_agent/scan/separ 分账接口地址
+	//
 
 	public function __construct()
 	{
 		$this->merchant = config('aggregate.merchantNo');
-
-		$this->rsaKey   = config('aggregate.rsaKey');
-
-		$this->requestUrl = config('aggregate.requestUrl');
 
 		$this->privateStr = config('aggregate.privateStr');
 	}
