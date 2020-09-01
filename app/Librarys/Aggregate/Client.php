@@ -152,7 +152,7 @@ class Client
 		 */
 		$data['sign'] = $this->netInSign($data);
 
-		dd(json_encode($data));
+		dd($data);
 
 		$arrs = array();
 
