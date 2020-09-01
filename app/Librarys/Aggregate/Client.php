@@ -132,10 +132,10 @@ class Client
 		$data['debitFee']		=	(string)($this->data->debit_fee / 10000);
 		$data['debitFeeLimit']	=	(string)$this->data->debit_fee_limit;
 		$data['creditFee']		=	(string)($this->data->credit_fee / 10000);
-		//$data['d0Fee']			=	(string)$this->data->d0_fee;
-		//$data['d0FeeQuota']		=	(string)$this->data->d0_fee_quota;
-		//$data['unionCreditFee']	=	(string)$this->data->union_credit_fee;
-		//$data['unionDebitFee']	=	(string)$this->data->union_debit_fee;
+		$data['d0Fee']			=	(string)($this->data->d0_fee / 10000);
+		$data['d0FeeQuota']		=	(string)$this->data->d0_fee_quota;
+		$data['unionCreditFee']	=	(string)($this->data->union_credit_fee / 10000);
+		$data['unionDebitFee']	=	(string)($this->data->union_debit_fee / 10000);
 		$data['aliFee']			=	(string)($this->data->ali_fee / 10000);
 		$data['wxFee']			=	(string)($this->data->wx_fee / 10000);
 
@@ -159,6 +159,8 @@ class Client
 		}
 
 		$client     = new GuzzClient();
+
+		print_r($this->url);
 
 		$result 	= $client->request('POST', $this->url, [ 'multipart' => $arrs ]);
 
@@ -190,7 +192,11 @@ class Client
 
 		$params = json_encode($params, JSON_UNESCAPED_UNICODE);
 
-		print_r($params);
+		echo $params."<br/>";
+
+	   	//$str = chunk_split(config('aggregate.privateStr'), 64, "\n"); 	// $privateStr 机构私钥--自行在类中或者文件中封装
+	   	
+	   	//$private_key = "-----BEGIN RSA PRIVATE KEY-----\n$str-----END RSA PRIVATE KEY-----";
 
 	   	$pi_key =  openssl_get_privatekey($private_key);
 	   	

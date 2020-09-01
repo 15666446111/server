@@ -23,7 +23,7 @@ class AddFiledsToMerchantsImportsTable extends Migration
 
             $table->smallInteger('type')->default(1)->comment('类型: 1=标准 2=小微')->after('merchant_name');
 
-            $table->string('merchant_nnumber')->nullable()->comment('商户号')->after('merchant_name_attr');
+            $table->string('merchant_number')->nullable()->comment('商户号')->after('merchant_name_attr');
             //
         });
     }
