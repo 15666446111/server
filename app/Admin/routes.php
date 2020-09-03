@@ -32,7 +32,8 @@ Route::group([
     $router->resource('point_orders',   'PointsOrderController');
 
 
-
+    // 聚合支付 MCC列表
+    $router->resource('merchant_mccs',      'MccController');
     // 聚合支付 商户进件
     $router->resource('merchant_imports',   'MerchantsImportController');
 });

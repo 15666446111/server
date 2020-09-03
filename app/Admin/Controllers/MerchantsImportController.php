@@ -2,10 +2,10 @@
 
 namespace App\Admin\Controllers;
 
-use App\Admin\Repositories\MerchantsImport;
 use Dcat\Admin\Form;
 use Dcat\Admin\Grid;
 use Dcat\Admin\Show;
+use App\Admin\Repositories\MerchantsImport;
 use Dcat\Admin\Controllers\AdminController;
 
 class MerchantsImportController extends AdminController
@@ -17,7 +17,8 @@ class MerchantsImportController extends AdminController
      */
     protected function grid()
     {
-        return Grid::make(new MerchantsImport(), function (Grid $grid) {
+        return Grid::make(new MerchantsImport(['mccs']), function (Grid $grid) {
+
             $grid->id->sortable();
             
             $grid->order_no;
@@ -26,8 +27,10 @@ class MerchantsImportController extends AdminController
             
             $grid->mobile;
 
+            $grid->column('mccs.explain', 'MCC');
+
             //$grid->merchant_name_attr;
-            //$grid->merchant_mcc;
+            //
             //$grid->merchant_prop;
             //$grid->merchant_city;
             //$grid->merchant_county;
@@ -68,6 +71,7 @@ class MerchantsImportController extends AdminController
                 $filter->equal('id');
         
             });
+
         });
     }
 
@@ -120,7 +124,6 @@ class MerchantsImportController extends AdminController
 
             $show->row(function (Show\Row $show) {
                 $show->newline('111');
-
                 $show->width(6)->debit_fee;
                 $show->width(6)->debit_fee_limit;
                 $show->width(6)->credit_fee;

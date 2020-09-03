@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Storage;
 use Illuminate\Http\Request;
+
+use App\Http\Requests\MerchantBindRequest;
 use App\Http\Requests\MerchantQueryRequest;
 use App\Http\Requests\MerchantImportRequest;
 
@@ -173,5 +175,25 @@ class ApiJuHeController extends Controller
         $applation = new \App\Librarys\Aggregate\Query($info);  
 
         $result    = $applation->query();
+    }
+
+
+
+    /**
+     * @Author    Pudding
+     * @DateTime  2020-09-03
+     * @copyright [copyright]
+     * @license   [license]
+     * @version   [ 商户绑定机器 ]
+     * @return    [type]      [description]
+     */
+    public function merchantBind(MerchantBindRequest $request)
+    {
+        $info = \App\MerchantsImport::where('merchant_number', $request->merchant_number)->first();
+
+        // 实力化 请求类
+        $applation = new \App\Librarys\Aggregate\Temial($info);  
+
+        $result    = $applation->bind();
     }
 }

@@ -22,3 +22,5 @@ Route::post('merchant-import',    'ApiJuHeController@merchantImport');						//	 
 
 Route::post('merchant-query',     'ApiJuHeController@merchantQuery');						//	 微服务 商户进件 - 商户查询
 
+Route::post('merchant-bind',      'ApiJuHeController@merchantBind');						//	 微服务 商户绑定 - 绑定终端
+
