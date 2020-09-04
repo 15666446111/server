@@ -33,7 +33,11 @@ class BankCardController extends Controller
 	{
 		if(!$request->merchant or !$request->ident) abort(404);
 		
-		if(!\App\MerchantSetting::where('merchant_number', $request->merchant)->exists()) abort(404);
+		$Merchant = \App\MerchantSetting::where('merchant_number', $request->merchant)->first();
+
+		if(empty($Merchant)) abort(404);
+		
+		if(!in_array('applyCard',json_decode($Merchant->merchant_ability, true))) abort(404);
 	
 		$this->merchant = $request->merchant;
 

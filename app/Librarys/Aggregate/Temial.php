@@ -58,15 +58,17 @@ class Temial
 
 			'snSource'		=>	'1', //机具来源 1 – 外部代理商(默认) 2 – 电银代理商 (当机具来源为“电银代理商”时, 外部终 端号、终端厂家、终端型号非必传)
 
-			'dyTermNo'		=> 	'90119288',   // 外部终端号 不超过8位。  返回。//。07109042
+			'dyTermNo'		=> 	'90119289',   		// 外部终端号 不超过8位。  返回。//。07109042
 
-			'termFactory'	=>	'079',
+			'termFactory'	=>	'034',
 
-			'termModel'		=>  '0013',
+			'termModel'		=>  '0088',
 
 			'termName'		=>	'晨光电子批发', 		//门店名称
 
 			'termAddress'	=>	'银座好望角1202', 	//门店地址
+
+			//'merc_id'		=>	$this->data->merchant_number,
 		);
 
 		$this->send($bodyData);
@@ -87,6 +89,8 @@ class Temial
 		 * 进件参数加密
 		 */
 		$data['sign'] = $this->bindSign($data);
+
+		//echo json_encode($data, JSON_UNESCAPED_UNICODE);
 
 		$arrs = array();
 
@@ -127,11 +131,15 @@ class Temial
 
 		$params = json_encode($params, JSON_UNESCAPED_UNICODE);
 
+		echo $params."<br/>";
+
 	   	$pi_key =  openssl_get_privatekey($private_key);
 	   	
 	   	openssl_sign($params, $binary_signature, $pi_key, OPENSSL_ALGO_MD5);
 	   	
 	   	openssl_free_key($pi_key);
+
+	   	echo base64_encode($binary_signature);
 
 	   	return base64_encode($binary_signature);
 	}

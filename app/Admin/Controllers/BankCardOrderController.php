@@ -22,7 +22,7 @@ class BankCardOrderController extends AdminController
         return Grid::make(new BankCardOrder(['cards']), function (Grid $grid) {
             
             $grid->id->sortable();
-            $grid->order_no;
+            $grid->order_no->help('申请订单编号,唯一标识');
             $grid->column('cards.title', '标题');
             $grid->name;
             $grid->phone;
@@ -36,7 +36,7 @@ class BankCardOrderController extends AdminController
             $grid->pay_money;
             $grid->verfity_time;
             $grid->order_remark;
-            $grid->notify_url;
+            //$grid->notify_url;
             //$grid->notify_answ;
             //$grid->ident;
             $grid->merchant;

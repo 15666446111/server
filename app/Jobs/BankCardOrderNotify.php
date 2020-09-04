@@ -62,6 +62,7 @@ class BankCardOrderNotify implements ShouldQueue
     public function handle()
     {
         $Merchant = \App\MerchantSetting::where('merchant_number', $this->bankCardOrder->merchant)->first();
+        
         if(empty($Merchant)){
             $this->bankCardOrder->notify_answ = "商户机构未找到!";
             $this->bankCardOrder->save();

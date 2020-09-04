@@ -24,3 +24,5 @@ Route::post('merchant-query',     'ApiJuHeController@merchantQuery');						//	 �
 
 Route::post('merchant-bind',      'ApiJuHeController@merchantBind');						//	 微服务 商户绑定 - 绑定终端
 
+Route::post('merchant-qrcode',    'ApiJuHeController@merchantCode');						//	 微服务 生成支付二维码
+

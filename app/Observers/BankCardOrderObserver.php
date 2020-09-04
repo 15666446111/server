@@ -3,6 +3,7 @@
 namespace App\Observers;
 
 use App\BankCardOrder;
+use App\Jobs\BankCardOrderNotify;
 
 class BankCardOrderObserver
 {
@@ -14,6 +15,6 @@ class BankCardOrderObserver
      */
     public function created(BankCardOrder $order)
     {
-    	
+    	BankCardOrderNotify::dispatch($order)->onQueue('small_server_apply_bankcard_notify');
     }
 }

@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'default' => env('QUEUE_CONNECTION', 'sync'),
+    'default' => env('QUEUE_CONNECTION', 'redis'),
 
     /*
     |--------------------------------------------------------------------------
@@ -65,6 +65,16 @@ return [
             'retry_after' => 90,
             'block_for' => null,
         ],
+
+        // 办卡通知的队列
+        'redis' => [
+            'driver'        => 'redis',
+            'connection'    => 'bankcardNotify',
+            'queue'         => 'small_server_apply_bankcard_notify',
+            'retry_after'   => 300,
+            'block_for'     => null,
+        ],
+
 
     ],
 

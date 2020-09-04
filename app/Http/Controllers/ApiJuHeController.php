@@ -12,7 +12,6 @@ use App\Http\Requests\MerchantImportRequest;
 class ApiJuHeController extends Controller
 {
 
-
 	/**
 	 * @Author    Pudding
 	 * @DateTime  2020-08-31
@@ -24,7 +23,6 @@ class ApiJuHeController extends Controller
 	 */
     public function merchantImport(MerchantImportRequest $request)
     {
-
     	### 参数齐全 前去验签
 
     	### 接收上传的文件  资质照片 三证合一或者营业执照
@@ -195,5 +193,24 @@ class ApiJuHeController extends Controller
         $applation = new \App\Librarys\Aggregate\Temial($info);  
 
         $result    = $applation->bind();
+    }
+
+
+    /**
+     * @Author    Pudding
+     * @DateTime  2020-09-03
+     * @copyright [copyright]
+     * @license   [license]
+     * @version   [ 生成支付二维码 ]
+     * @param     Request     $request [description]
+     * @return    [type]               [description]
+     */
+    public function merchantCode(Request $request)
+    {
+        // 实力化 请求类
+        $applation = new \App\Librarys\Aggregate\Code();  
+
+        $result    = $applation->make();
+
     }
 }
