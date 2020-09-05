@@ -153,10 +153,10 @@ class Client
 		$data['bnkAcnm']	=	$this->data->bank_name;
 
 		$data['debitFee']		=	(string)($this->data->debit_fee / 10000);
-		$data['debitFeeLimit']	=	(string)$this->data->debit_fee_limit;
+		$data['debitFeeLimit']	=	(string)$this->data->debit_fee_limit / 100;
 		$data['creditFee']		=	(string)($this->data->credit_fee / 10000);
 		$data['d0Fee']			=	(string)($this->data->d0_fee / 10000);
-		$data['d0FeeQuota']		=	(string)$this->data->d0_fee_quota;
+		$data['d0FeeQuota']		=	(string)$this->data->d0_fee_quota / 100;
 		$data['unionCreditFee']	=	(string)($this->data->union_credit_fee / 10000);
 		$data['unionDebitFee']	=	(string)($this->data->union_debit_fee / 10000);
 		$data['aliFee']			=	(string)($this->data->ali_fee / 10000);

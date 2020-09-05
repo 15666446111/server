@@ -29,7 +29,8 @@ class MerchantQueryRequest extends BaseRequests
             /**
              * @version  必填项  [<description>]
              */
-            'merchant_number'              =>  'required|exists:merchants_imports,merchant_number',        //  商户号 必须存在表
+            'merchant_number'               =>  'required|exists:merchants_imports,merchant_number',        //  商户号 必须存在表
+            'out_mercid'                    =>  'required|exists:merchant_settings,merchant_number',        //  外部机构方
         ];
     }
 

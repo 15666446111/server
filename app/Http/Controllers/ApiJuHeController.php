@@ -25,7 +25,6 @@ class ApiJuHeController extends Controller
     	### 参数齐全 前去验签
         $Merchant = \App\MerchantSetting::where('merchant_number', $request->out_mercid)->first();
 
-
         ### 检查费率
         if($Merchant->debit_fee > $request->debit_fee){
             return response()->json(['message'=> '借记卡费率不正确', 'code' => 10098]);
@@ -202,12 +201,14 @@ class ApiJuHeController extends Controller
      */
     public function merchantQuery(MerchantQueryRequest $request)
     {
-        $info = \App\MerchantsImport::where('merchant_number', $request->merchant_number)->first();
+        $info = \App\MerchantsImport::where('merchant_number', $request->merchant_number)->where('out_mercid', $request->out_mercid)->first();
+
+        if(empty($info)) return response()->json(['message'=> '商户号不存在!', 'code' => 10089]);
 
         // 实力化 请求类
         $applation = new \App\Librarys\Aggregate\Query($info);  
 
-        $result    = $applation->query();
+        return $applation->query();
     }
 
 
