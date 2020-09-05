@@ -31,21 +31,21 @@ class MerchantImportRequest extends BaseRequests
              */
             'no'                =>  'required|digits_between:8,30|unique:merchants_imports,no',     //  下游订单号
             'type'              =>  'required|in:1,2',                                              //  商户类型 必须为 1 2中的其中一个
-            'out_mercid'        =>  'required',                                                     //  外部机构方  微服务下发的商户id
+            'out_mercid'        =>  'required|exists:merchant_settings,merchant_number',            //  外部机构方 微服务下发的商户id
             
             // 商户设置 
             'mobile'            =>  'required|digits_between:11,11',                                //  商户手机号 必填
             'merchant_name'     =>  'required|between:2,6',                                         //  商户名称
             'merchant_name_attr'=>  'required|between:4,30',                                        //  商户简称
-            'merchant_mcc'      =>  'required',                                                     //  商户MCC
+            'merchant_mcc'      =>  'required|exists:mccs,mcc',                                     //  商户MCC
             'merchant_prop'     =>  'required',                                                     //  归属省
             'merchant_city'     =>  'required',                                                     //  归属市
             'merchant_county'   =>  'required',                                                     //  归属区县
             'merchant_address'  =>  'required',                                                     //  详细地址
                 
             // 证件信息
-            'card_no'           =>  'required',                                                     //  法人身份证号
-            'card_expd'         =>  'required',                                                     //  法人证件过期时间
+            'card_no'           =>  ['required', 'regex:/(^\d{15}$)|(^\d{17}([0-9]|X)$)/'],         //  法人身份证号
+            'card_expd'         =>  'required|date_format:Y-m-d|after:tomorrow',                     //  法人证件过期时间
 
             // 银行设置
             'bank_link'         =>  'required',                                                     //  联行号
@@ -53,15 +53,15 @@ class MerchantImportRequest extends BaseRequests
             'bank_name'         =>  'required',                                                     //  银行开户名称
 
             // 费率设置 
-            'debit_fee'         =>  'required|integer',                                             //  借记卡费率
-            'debit_fee_limit'   =>  'required',                                                     //  借记卡封顶
-            'credit_fee'        =>  'required|integer',                                            //   贷记卡费率
-            'd0_fee'            =>  'required|integer',                                             //  D0 额外手续费 费率
-            'd0_fee_quota'      =>  'required',                                                     //  D0 额外手续费 定额
-            'union_credit_fee'  =>  'required|integer',                                             //  云闪付贷记卡费率
-            'union_debit_fee'   =>  'required|integer',                                             //  云闪付借记卡费率
-            'ali_fee'           =>  'required|integer',                                             //  支付宝费率
-            'wx_fee'            =>  'required|integer',                                             //  微信费率
+            'debit_fee'         =>  'required|integer|max:70',                                              //  借记卡费率
+            'debit_fee_limit'   =>  'required|integer',                                                     //  借记卡封顶
+            'credit_fee'        =>  'required|integer|max:70',                                              //   贷记卡费率
+            'd0_fee'            =>  'required|integer|max:70',                                              //  D0 额外手续费 费率
+            'd0_fee_quota'      =>  'required|integer',                                                     //  D0 额外手续费 定额
+            'union_credit_fee'  =>  'required|integer|max:70',                                              //  云闪付贷记卡费率
+            'union_debit_fee'   =>  'required|integer|max:70',                                              //  云闪付借记卡费率
+            'ali_fee'           =>  'required|integer|max:70',                                              //  支付宝费率
+            'wx_fee'            =>  'required|integer|max:70',                                              //  微信费率
 
             // 照片信息
             'pic_yhk'           =>  'required|mimes:jpeg,png,jpg',                                  //  银行卡照片

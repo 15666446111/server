@@ -2,13 +2,14 @@
 
 namespace App\Admin\Controllers;
 
-use App\Admin\Repositories\BankCard;
-use App\Admin\Repositories\BankCardOrder;
 use Dcat\Admin\Form;
 use Dcat\Admin\Grid;
 use Dcat\Admin\Show;
+use App\Admin\Repositories\BankCard;
+use App\Admin\Repositories\BankCardOrder;
 use Dcat\Admin\Controllers\AdminController;
 use App\Admin\Extensions\BankCardOrderExpoter;
+use App\Admin\Actions\Grid\HandleBankcardOrder;
 
 class BankCardOrderController extends AdminController
 {
@@ -32,7 +33,7 @@ class BankCardOrderController extends AdminController
             //$grid->column('cards.getpip()', '标题');
             //$grid->cards.getpip;
             //$grid->order_pic;
-            $grid->status;
+            $grid->status->using([0 => '待审核', 1 => '通过', -1=>'拒绝'])->label([ 1 => 'success', -1 => 'danger']);
             $grid->pay_money;
             $grid->verfity_time;
             $grid->order_remark;
@@ -47,6 +48,7 @@ class BankCardOrderController extends AdminController
             
             $grid->disableCreateButton();
             $grid->disableDeleteButton();
+            $grid->disableViewButton();
             $grid->disableBatchDelete();
 
             $grid->filter(function (Grid\Filter $filter) {
@@ -73,6 +75,7 @@ class BankCardOrderController extends AdminController
 
             $grid->export($titles)->csv();
 
+            $grid->actions([new HandleBankcardOrder()]);
             //$grid->export(new BankCardOrderExpoter());
         });
     }
@@ -167,6 +170,9 @@ class BankCardOrderController extends AdminController
 
             });
             
+            $form->disableSubmitButton();
+            $form->disableResetButton();
+            $form->disableDeleteButton();
         });
     }
 }

@@ -105,10 +105,28 @@ class MerchantSettingController extends AdminController
                 $form->checkbox('merchant_ability')->options(['applyCard' => '申请信用卡', 'pointsChange' => '积分兑换', 'nocardPay' => '无卡支付'])->saving(function ($value) {
                         return json_encode($value);
                     });
-            })->tab('商户配置', function (Form $form) {
+            })->tab('回调配置', function (Form $form) {
                 $form->url('apply_card_notify_url');
                 $form->url('points_change_notify_url');
                 $form->url('nocard_pay_notify_url');
+
+            })->tab('聚合费率', function (Form $form) {
+
+                $form->rate('debit_fee', '借记卡费率(万分位)');
+                $form->rate('debit_fee_limit', '借记卡封顶(单位:分)');
+                $form->rate('credit_fee', '贷记卡费率(万分位)');
+
+                $form->rate('d0_fee', 'D0额外手续费率(万分位)');
+                $form->rate('d0_fee_quota', 'D0额外定额手续费(单位:分)');
+
+                $form->rate('union_credit_fee', '云闪付贷记卡费率(万分位)');
+                $form->rate('union_debit_fee', '云闪付借记卡费率(万分位)');
+
+                $form->rate('ali_fee', '支付宝费率(万分位)');
+
+                $form->rate('wx_fee', '微信费率(万分位)');
+
+                //$form->slider('wx_fee', '微信费率(万分位)')->options(['max' => 100, 'min' => 30, 'step' => 1]);
             });
 
 
@@ -116,6 +134,7 @@ class MerchantSettingController extends AdminController
             $form->saving(function (Form $form) {
                 // 判断是否是新增操作
                 if ($form->isCreating()) {
+
                     $account = \request('account');
                     $password= \request('password');
                 
@@ -133,7 +152,7 @@ class MerchantSettingController extends AdminController
                         'password'  =>  bcrypt($password),
                         'name'      =>  $form->company,
                         'number'    =>  $form->merchant_number,
-                    ]); 
+                    ]);
 
                     \App\AdminRoleUser::create([ 'role_id'   =>2, 'user_id'   =>$adminUser->id ]);
 

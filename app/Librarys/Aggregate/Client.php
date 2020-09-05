@@ -2,6 +2,7 @@
 
 namespace App\Librarys\Aggregate;
 
+use DateTime;
 use App\MerchantsImport;
 use GuzzleHttp\Client as GuzzClient;
 
@@ -44,7 +45,29 @@ class Client
 	{
 		$result =  $this->data->type == "1" ? $this->bzNet() : $this->smallNet();
 
-		dd($result);
+		$this->data->dy_return = $result;
+
+		$result = json_decode($result);
+
+		if($result->code == "000000"){
+
+			$this->data->merchant_number = $result->mercId;
+
+			$this->data->state = $result->mercSts;
+
+			$this->data->save();
+
+			// 需要压入队列器查询进件状态
+
+			return response()->json(['message'=> '入网资料提交成功,等待审核!', 'code' => 10000, 'merchantId' => $result->mercId]);
+
+		}else{
+
+			$this->data->state = -1;	// -1为无效进件资料 失败的
+			$this->data->save();
+			return response()->json(['message'=> '商户入网失败!', 'code' => 10090]);
+
+		}
 	}
 
 
@@ -92,9 +115,9 @@ class Client
 			'wxFlg'			=>	'0',									//是否开通微信
 			'unionFlg'		=>	'0',									//是否开通云闪付
 			//'XY1'			=>	'',										//支付协议
-			'CDJJ1'			=>	storage_path('app/public/'.$this->data->pic_jj),		//场地街景
-			'CDNJ1'			=>	storage_path('app/public/'.$this->data->pic_nj),		//场地内景
-			'ZZ1'			=>	storage_path('app/public/'.$this->data->pic_zz), 		//三证合一或营业执照
+			'CDJJ1'			=>	$this->data->pic_jj,					//场地街景
+			'CDNJ1'			=>	$this->data->pic_nj,					//场地内景
+			'ZZ1'			=>	$this->data->pic_zz, 					//三证合一或营业执照
 		);
 
 		return $this->send($bodyData);
@@ -142,10 +165,10 @@ class Client
 		$data['outMercId']		=	$this->data->out_mercid;
 		$data['settType']		=	'T1';
 
-		$data['SFZ1']			=	storage_path('app/public/'.$this->data->pic_sfz1);
-		$data['SFZ2']			=	storage_path('app/public/'.$this->data->pic_sfz2);
-		$data['YHK']			=	storage_path('app/public/'.$this->data->pic_yhk);
-		$data['CDMT1']			=	storage_path('app/public/'.$this->data->pic_mt);
+		$data['SFZ1']			=	$this->data->pic_sfz1;
+		$data['SFZ2']			=	$this->data->pic_sfz2;
+		$data['YHK']			=	$this->data->pic_yhk;
+		$data['CDMT1']			=	$this->data->pic_mt;
 
 		/**
 		 * 进件参数加密
@@ -155,12 +178,10 @@ class Client
 		$arrs = array();
 
 		foreach ($data as $key => $value) {
-			$arrs[] = array('name' => $key, 'contents' => in_array($key, ['SFZ1', 'SFZ2', 'YHK', 'CDMT1', 'ZZ1', 'CDJJ1', 'CDNJ1']) ? fopen($value, 'r') : $value);
+			$arrs[] = array('name' => $key, 'contents' => in_array($key, ['SFZ1', 'SFZ2', 'YHK', 'CDMT1', 'ZZ1', 'CDJJ1', 'CDNJ1']) ? fopen(\App\Server\OSS::getPrivateObjectURLWithExpireTime($value, new DateTime('+1 day')), 'r') : $value);
 		}
 
 		$client     = new GuzzClient();
-
-		print_r($this->url);
 
 		$result 	= $client->request('POST', $this->url, [ 'multipart' => $arrs ]);
 
@@ -191,12 +212,6 @@ class Client
 		ksort($params);
 
 		$params = json_encode($params, JSON_UNESCAPED_UNICODE);
-
-		echo $params."<br/>";
-
-	   	//$str = chunk_split(config('aggregate.privateStr'), 64, "\n"); 	// $privateStr 机构私钥--自行在类中或者文件中封装
-	   	
-	   	//$private_key = "-----BEGIN RSA PRIVATE KEY-----\n$str-----END RSA PRIVATE KEY-----";
 
 	   	$pi_key =  openssl_get_privatekey($private_key);
 	   	

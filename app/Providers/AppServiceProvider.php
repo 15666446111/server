@@ -2,6 +2,9 @@
 
 namespace App\Providers;
 
+use App\BankCardOrder;
+use App\Observers\BankCardOrderObserver;
+
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -23,6 +26,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        /**
+         *  申请办卡 队列执行
+         */
+        BankCardOrder::observe(BankCardOrderObserver::class);
     }
 }

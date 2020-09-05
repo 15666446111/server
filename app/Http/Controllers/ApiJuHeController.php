@@ -11,7 +11,6 @@ use App\Http\Requests\MerchantImportRequest;
 
 class ApiJuHeController extends Controller
 {
-
 	/**
 	 * @Author    Pudding
 	 * @DateTime  2020-08-31
@@ -24,64 +23,102 @@ class ApiJuHeController extends Controller
     public function merchantImport(MerchantImportRequest $request)
     {
     	### 参数齐全 前去验签
+        $Merchant = \App\MerchantSetting::where('merchant_number', $request->out_mercid)->first();
+
+
+        ### 检查费率
+        if($Merchant->debit_fee > $request->debit_fee){
+            return response()->json(['message'=> '借记卡费率不正确', 'code' => 10098]);
+        }
+        if($Merchant->debit_fee_limit > $request->debit_fee_limit){
+            return response()->json(['message'=> '借记卡封顶不正确', 'code' => 10098]);
+        }
+        if($Merchant->credit_fee > $request->credit_fee){
+            return response()->json(['message'=> '贷记卡费率不正确', 'code' => 10098]);
+        }
+        if($Merchant->d0_fee > $request->d0_fee){
+            return response()->json(['message'=> 'D0手续费率不正确', 'code' => 10098]);
+        }
+        if($Merchant->d0_fee_quota > $request->d0_fee_quota){
+            return response()->json(['message'=> 'D0定额手续费不正确', 'code' => 10098]);
+        }
+        if($Merchant->union_credit_fee > $request->union_credit_fee){
+            return response()->json(['message'=> '云闪付贷记卡费率不正确', 'code' => 10098]);
+        }
+        if($Merchant->union_debit_fee > $request->union_debit_fee){
+            return response()->json(['message'=> '云闪付借记卡费率不正确', 'code' => 10098]);
+        }
+        if($Merchant->ali_fee > $request->ali_fee){
+            return response()->json(['message'=> '支付宝费率不正确', 'code' => 10098]);
+        }
+        if($Merchant->wx_fee > $request->wx_fee){
+            return response()->json(['message'=> '微信费率不正确', 'code' => 10098]);
+        }
+
 
     	### 接收上传的文件  资质照片 三证合一或者营业执照
-    	if($request->hasFile('pic_zz') && $request->file('pic_zz')->isValid()){
-    		//文件扩展名
-            $zzFile = sha1($request->file('pic_zz')->getClientOriginalName().time().rand(100,999)).'.'.$request->file('pic_zz')->getClientOriginalExtension();
-            Storage::disk('pay')->put($zzFile, file_get_contents($request->file('pic_zz')->path()));
-            $zzPath   = 'pay/'. date('Ymd') . "/". $zzFile;
-    	}
+        if($request->hasFile('pic_zz') && $request->file('pic_zz')->isValid()){
+            $file    = $request->file('pic_zz');
+            $path    = "images/".$request->no.'/'. sha1(time().rand(100,999)).".".$file->getClientOriginalExtension();
+            $zzPath  = \App\Server\OSS::publicUpload($path, $file);
+            $zzPath  = $path;
+        }
 
+        ### 接收上传的银行卡照片
     	if($request->hasFile('pic_yhk') && $request->file('pic_yhk')->isValid()){
-    		//文件扩展名
-            $yhkFile = sha1($request->file('pic_yhk')->getClientOriginalName().time().rand(100,999)).'.'.$request->file('pic_yhk')->getClientOriginalExtension();
-            Storage::disk('pay')->put($yhkFile, file_get_contents($request->file('pic_yhk')->path()));
-            $yhkPath   = 'pay/'. date('Ymd') . "/". $yhkFile;
-    	}
+            $file    = $request->file('pic_yhk');
+            $path    = "images/".$request->no.'/'. sha1(time().rand(100,999)).".".$file->getClientOriginalExtension();
+            $yhkPath = \App\Server\OSS::publicUpload($path, $file);
+            $yhkPath  = $path;
+        }
 
-    	if($request->hasFile('pic_sfz1') && $request->file('pic_sfz1')->isValid()){
-    		//文件扩展名
-            $sfz1file = sha1($request->file('pic_sfz1')->getClientOriginalName().time().rand(100,999)).'.'.$request->file('pic_sfz1')->getClientOriginalExtension();
-            Storage::disk('pay')->put($sfz1file, file_get_contents($request->file('pic_sfz1')->path()));
-            $sfz1Path   = 'pay/'. date('Ymd') . "/". $sfz1file;
-    	}
+        ### 接收上传的身份证正面
+        if($request->hasFile('pic_sfz1') && $request->file('pic_sfz1')->isValid()){
+            $file  = $request->file('pic_sfz1');
+            $path  = "images/".$request->no.'/'. sha1(time().rand(100,999)).".".$file->getClientOriginalExtension();
+            $sfz1Path = \App\Server\OSS::publicUpload($path, $file);
+            $sfz1Path = $path;
+        }
 
-    	if($request->hasFile('pic_sfz2') && $request->file('pic_sfz2')->isValid()){
-    		//文件扩展名
-            $sfz2file = sha1($request->file('pic_sfz2')->getClientOriginalName().time().rand(100,999)).'.'.$request->file('pic_sfz2')->getClientOriginalExtension();
-            Storage::disk('pay')->put($sfz2file, file_get_contents($request->file('pic_sfz2')->path()));
-            $sfz2Path   = 'pay/'. date('Ymd') . "/". $sfz2file;
-    	}
+        ### 接收上传的身份证反面
+        if($request->hasFile('pic_sfz2') && $request->file('pic_sfz2')->isValid()){
+            $file  = $request->file('pic_sfz2');
+            $path  = "images/".$request->no.'/'. sha1(time().rand(100,999)).".".$file->getClientOriginalExtension();
+            $sfz2Path = \App\Server\OSS::publicUpload($path, $file);
+            $sfz2Path = $path;
+        }
 
-    	if($request->hasFile('pic_mt') && $request->file('pic_mt')->isValid()){
-    		//文件扩展名
-            $mtfile = sha1($request->file('pic_mt')->getClientOriginalName().time().rand(100,999)).'.'.$request->file('pic_mt')->getClientOriginalExtension();
-            Storage::disk('pay')->put($mtfile, file_get_contents($request->file('pic_mt')->path()));
-            $mtPath   = 'pay/'. date('Ymd') . "/". $mtfile;
-    	}
+        ### 接收上传的门头照片
+        if($request->hasFile('pic_mt') && $request->file('pic_mt')->isValid()){
+            $file   = $request->file('pic_mt');
+            $path   = "images/".$request->no.'/'. sha1(time().rand(100,999)).".".$file->getClientOriginalExtension();
+            $mtPath = \App\Server\OSS::publicUpload($path, $file);
+            $mtPath = $path;
+        }
+    	
+        ### 接收上传的街景照片
+        if($request->hasFile('pic_jj') && $request->file('pic_jj')->isValid()){
+            $file   = $request->file('pic_jj');
+            $path   = "images/".$request->no.'/'. sha1(time().rand(100,999)).".".$file->getClientOriginalExtension();
+            $jjPath = \App\Server\OSS::publicUpload($path, $file);
+            $jjPath = $path;
+        }
+    
+        ### 接收上传的内景照片
+        if($request->hasFile('pic_nj') && $request->file('pic_nj')->isValid()){
+            $file   = $request->file('pic_nj');
+            $path   = "images/".$request->no.'/'. sha1(time().rand(100,999)).".".$file->getClientOriginalExtension();
+            $njPath = \App\Server\OSS::publicUpload($path, $file);
+            $njPath = $path;
+        }
 
-
-    	if($request->hasFile('pic_jj') && $request->file('pic_jj')->isValid()){
-    		//文件扩展名
-            $jjfile = sha1($request->file('pic_jj')->getClientOriginalName().time().rand(100,999)).'.'.$request->file('pic_jj')->getClientOriginalExtension();
-            Storage::disk('pay')->put($jjfile, file_get_contents($request->file('pic_jj')->path()));
-            $jjPath   = 'pay/'. date('Ymd') . "/". $jjfile;
-    	}
-
-    	if($request->hasFile('pic_nj') && $request->file('pic_nj')->isValid()){
-    		//文件扩展名
-            $njfile = sha1($request->file('pic_nj')->getClientOriginalName().time().rand(100,999)).'.'.$request->file('pic_nj')->getClientOriginalExtension();
-            Storage::disk('pay')->put($njfile, file_get_contents($request->file('pic_nj')->path()));
-            $njPath   = 'pay/'. date('Ymd') . "/". $njfile;
-    	}
-
-    	if($request->hasFile('pic_xy') && $request->file('pic_xy')->isValid()){
-    		//文件扩展名
-            $xyfile = sha1($request->file('pic_xy')->getClientOriginalName().time().rand(100,999)).'.'.$request->file('pic_xy')->getClientOriginalExtension();
-            Storage::disk('pay')->put($pic_xy, file_get_contents($request->file('pic_xy')->path()));
-            $xyPath   = 'pay/'. date('Ymd') . "/". $xyfile;
-    	}
+        ### 上传的协议照片
+        if($request->hasFile('pic_xy') && $request->file('pic_xy')->isValid()){
+            $file   = $request->file('pic_xy');
+            $path   = "images/".$request->no.'/'. sha1(time().rand(100,999)).".".$file->getClientOriginalExtension();
+            $xyPath = \App\Server\OSS::publicUpload($path, $file);
+            $xyPath = $path;
+        }
 
     	### 写入数据库
     	$imports = \App\MerchantsImport::create([
@@ -136,9 +173,7 @@ class ApiJuHeController extends Controller
     	// 实力化 请求类
     	$applation = new \App\Librarys\Aggregate\Client($imports);	
 
-    	$result    = $applation->run();
-
-
+    	return $applation->run();
     }
 
 

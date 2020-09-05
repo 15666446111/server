@@ -62,7 +62,7 @@ class BankCardOrderNotify implements ShouldQueue
     public function handle()
     {
         $Merchant = \App\MerchantSetting::where('merchant_number', $this->bankCardOrder->merchant)->first();
-        
+
         if(empty($Merchant)){
             $this->bankCardOrder->notify_answ = "商户机构未找到!";
             $this->bankCardOrder->save();
@@ -108,6 +108,14 @@ class BankCardOrderNotify implements ShouldQueue
 
         try {
 
+            ksort($args);
+
+            $query = http_build_query($args);
+
+            $queryString = $this->bankCardOrder->merchant.$query;
+
+            $args['sign'] = md5($queryString);
+
             $result = $client->post($Merchant->apply_card_notify_url, [ 'json' => $args ]);
 
             $content = $result->getBody()->getContents();
@@ -119,6 +127,7 @@ class BankCardOrderNotify implements ShouldQueue
             $this->bankCardOrder->save();
 
             if($content != 'success'){
+
                 if($this->bankCardOrder->nofity_count > 2 ){
                     $this->delete();
                 }else{
