@@ -2,7 +2,7 @@
 
 namespace App\Librarys\Aggregate;
 
-use App\MerchantsImport;
+use App\MerchantTemial;
 use GuzzleHttp\Client as GuzzClient;
 
 class Temial
@@ -29,7 +29,7 @@ class Temial
 	 * @license   [license]
 	 * @version   [ Class init for set params]
 	 */
-	public function __construct(MerchantsImport $params)
+	public function __construct(MerchantTemial $params)
 	{
 		$this->data = $params;
 
@@ -52,26 +52,35 @@ class Temial
 
 			'orgNumber' 	=> 	config('aggregate.orgNumber'),
 
-			'tsn'			=>	'ABC123456',
+			'tsn'			=>	$this->data->sn,
 
-			'dyMchNo'		=>	$this->data->merchant_number,
+			'dyMchNo'		=>	$this->data->merc_no,
 
-			'snSource'		=>	'1', //机具来源 1 – 外部代理商(默认) 2 – 电银代理商 (当机具来源为“电银代理商”时, 外部终 端号、终端厂家、终端型号非必传)
+			'snSource'		=>	'1', 			//机具来源 1 外部代理商(默认) 2 电银代理商 (来源为“电银”时, 外部终端号、厂家、型号非必传)
 
-			'dyTermNo'		=> 	'90119289',   		// 外部终端号 不超过8位。  返回。//。07109042
+			'dyTermNo'		=> 	$this->data->term_no,   		// 外部终端号 不超过8位。  返回。//。07109042
 
 			'termFactory'	=>	'034',
 
 			'termModel'		=>  '0088',
 
-			'termName'		=>	'晨光电子批发', 		//门店名称
+			'termName'		=>	$this->data->term_name, 		//门店名称
 
-			'termAddress'	=>	'银座好望角1202', 	//门店地址
-
-			//'merc_id'		=>	$this->data->merchant_number,
+			'termAddress'	=>	$this->data->term_address 		//门店地址
 		);
 
-		$this->send($bodyData);
+		$result = $this->send($bodyData);
+
+		$result = json_decode($result);
+
+		if($result->code == "000000"){
+			$this->data->dy_term_no = $result->dyTermNo ?? '';
+			$this->data->save();
+			return response()->json(['message'=> 'success', 'code' => 10000, 'temial' => $result->dyTermNo]);
+		}else{
+			$this->data->delete();
+			return response()->json(['message'=> $result->msg, 'code' => 10088]);
+		}
 	}
 
 
@@ -85,19 +94,12 @@ class Temial
 	 */
 	public function send($data)
 	{	
-		/**
-		 * 进件参数加密
-		 */
 		$data['sign'] = $this->bindSign($data);
-
-		//echo json_encode($data, JSON_UNESCAPED_UNICODE);
 
 		$arrs = array();
 
 		foreach ($data as $key => $value) {
-
-			$arrs[] = array('name' => $key, 'contents' => in_array($key, ['SFZ1', 'SFZ2', 'YHK', 'CDMT1']) ? fopen($value, 'r') : $value);
-			
+			$arrs[] = array('name' => $key, 'contents' =>  $value);
 		}
 
 		$client     = new GuzzClient();
@@ -106,7 +108,7 @@ class Temial
 
         $content 	= $result->getBody()->getContents();
 
-        dd($content);
+        return $content;
 	}
 
 
@@ -131,15 +133,11 @@ class Temial
 
 		$params = json_encode($params, JSON_UNESCAPED_UNICODE);
 
-		echo $params."<br/>";
-
 	   	$pi_key =  openssl_get_privatekey($private_key);
 	   	
 	   	openssl_sign($params, $binary_signature, $pi_key, OPENSSL_ALGO_MD5);
 	   	
 	   	openssl_free_key($pi_key);
-
-	   	echo base64_encode($binary_signature);
 
 	   	return base64_encode($binary_signature);
 	}

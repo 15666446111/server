@@ -38,29 +38,9 @@ Route::any('/netInCallback', 	'ApiCallBackController@netIn');
 /**
  * @version [<vector>] [< 扫码的回调地址 >]
  */
-Route::any('/payCallback', function(){
-	die('success');
-}); 
+Route::any('/payCallback', function(){ die('success'); }); 
 
 
-
-//  聚合支付 标准进件 
-Route::get('/aggregate_bz', function(){
-	$a = new \App\Librarys\Aggregate\Client();
-	dd($a->bzNetIn());
-});
-
-//  聚合支付 进件 
-Route::get('/aggregate', function(){
-	$a = new \App\Librarys\Aggregate\Client();
-	dd($a->netIn());
-});   
-
-//  聚合支付 进件查询
-Route::get('/aggregate_select', function(){
-	$a = new \App\Librarys\Aggregate\Query();
-	dd($a->query());
-}); 
 
 //  聚合支付 进件查询
 Route::get('/aggregate_edit', function(){
@@ -73,18 +53,6 @@ Route::get('/aggregate_edit_bz', function(){
 	$a = new \App\Librarys\Aggregate\Edit();
 	dd($a->bzEdit());
 });	
-
-//  聚合支付 终端绑定
-Route::get('/aggregate_bind', function(){
-	$a = new \App\Librarys\Aggregate\Temial();
-	dd($a->bind());
-});	
-
-//  聚合支付 生成二维码
-Route::get('/aggregate_make', function(){
-	$a = new \App\Librarys\Aggregate\Code();
-	dd($a->make());
-});
 
 //  聚合支付 扫码
 Route::get('/aggregate_sacn', function(){

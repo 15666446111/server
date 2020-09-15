@@ -6,6 +6,7 @@ use Storage;
 use Illuminate\Http\Request;
 
 use App\Http\Requests\MerchantBindRequest;
+use App\Http\Requests\MerchantCodeRequest;
 use App\Http\Requests\MerchantQueryRequest;
 use App\Http\Requests\MerchantImportRequest;
 
@@ -203,7 +204,7 @@ class ApiJuHeController extends Controller
     {
         $info = \App\MerchantsImport::where('merchant_number', $request->merchant_number)->where('out_mercid', $request->out_mercid)->first();
 
-        if(empty($info)) return response()->json(['message'=> '商户号不存在!', 'code' => 10089]);
+        if(empty($info)) return response()->json(['message'=> '商户不存在!', 'code' => 10089]);
 
         // 实力化 请求类
         $applation = new \App\Librarys\Aggregate\Query($info);  
@@ -223,12 +224,30 @@ class ApiJuHeController extends Controller
      */
     public function merchantBind(MerchantBindRequest $request)
     {
-        $info = \App\MerchantsImport::where('merchant_number', $request->merchant_number)->first();
+        ### 验签
+
+        $info = \App\MerchantsImport::where('merchant_number', $request->merchant_number)->where('out_mercid', $request->out_mercid)->first();
+
+        if(empty($info)) return response()->json(['message'=> '商户不存在!', 'code' => 10089]);
+
+        // 获得该商户的有效终端
+        $count = \App\MerchantTemial::where('merc_no', $request->merchant_number)->where('state', 1)->count();
+        if($count >= 5){
+            return response()->json(['message'=> '可绑定终端已达上限!', 'code' => 10088]);
+        }
+
+        $bind = \App\MerchantTemial::create([
+            'merc_no'   =>  $request->merchant_number,
+            'sn'        =>  $request->merchant_sn,
+            'term_no'   =>  $request->merchant_term_no,
+            'term_name' =>  $request->merchant_name,
+            'term_address'  =>  $request->merchant_address
+        ]);
 
         // 实力化 请求类
-        $applation = new \App\Librarys\Aggregate\Temial($info);  
+        $applation = new \App\Librarys\Aggregate\Temial($bind);  
 
-        $result    = $applation->bind();
+        return $applation->bind();
     }
 
 
@@ -241,12 +260,35 @@ class ApiJuHeController extends Controller
      * @param     Request     $request [description]
      * @return    [type]               [description]
      */
-    public function merchantCode(Request $request)
+    public function merchantCode(MerchantCodeRequest $request)
     {
-        // 实力化 请求类
-        $applation = new \App\Librarys\Aggregate\Code();  
+        ### 验签
 
-        $result    = $applation->make();
+        $info = \App\MerchantsImport::where('merchant_number', $request->merchant_number)->where('out_mercid', $request->out_mercid)->first();
+
+        if(empty($info)) return response()->json(['message'=> '商户不存在!', 'code' => 10079]);
+
+        $termInfo = \App\MerchantTemial::where('dy_term_no', $request->term_no)->where('merc_no', $request->merchant_number)->first();
+
+        if(!$termInfo) return response()->json(['message'=> '终端机器不存在!', 'code' => 10078]);
+        if($termInfo->state != "1") return response()->json(['message'=> '终端机器状态不正常!', 'code' => 10078]);
+
+        // 写入订单 
+        $order = \App\CodeOrder::create([
+            'order_no'  =>  'CHBP'.time().rand(1000,9999),   // 生成请求订单号
+            'no'        =>  $request->no,
+            'out_mercid'=>  $request->out_mercid,
+            'merchant_number'   =>  $request->merchant_number,
+            'term_no'   =>  $request->term_no,
+            'money'     =>  $request->amount,
+            'type'      =>  $request->trancde,
+            'call_url'  =>  $request->notify_url
+        ]); 
+        
+        // 实力化 请求类
+        $applation = new \App\Librarys\Aggregate\Code($order);  
+
+        return $applation->make();
 
     }
 }

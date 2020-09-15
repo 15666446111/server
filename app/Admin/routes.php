@@ -36,4 +36,8 @@ Route::group([
     $router->resource('merchant_mccs',      'MccController');
     // 聚合支付 商户进件
     $router->resource('merchant_imports',   'MerchantsImportController');
+    // 聚合支付 商户终端
+    $router->resource('merchant_binds',     'MerchantTemialController');
+    // 聚合支付 二维码订单
+    $router->resource('code_orders',        'CodeOrderController');
 });

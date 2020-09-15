@@ -54,7 +54,7 @@ class Query
 		$result = $this->send($bodyData);
 
 		$result = json_decode($result);
-
+		//dd($result);
 		if($result->code == "000000"){
 			//dd($result);
 			$this->data->merchant_name 		= $result->mercCnm;
