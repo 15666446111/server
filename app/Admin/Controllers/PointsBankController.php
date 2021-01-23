@@ -19,6 +19,8 @@ class PointsBankController extends AdminController
     {
         return Grid::make(new PointsBank(), function (Grid $grid) {
 
+            $grid->model()->orderBy('id', 'desc');
+            
             $grid->id->sortable();
 
             $grid->title;

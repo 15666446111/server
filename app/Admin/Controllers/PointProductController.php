@@ -20,6 +20,8 @@ class PointProductController extends AdminController
     {
         return Grid::make(new PointProduct(['banks']), function (Grid $grid) {
 
+            $grid->model()->orderBy('id', 'desc');
+            
             $grid->id->sortable();
             
             $grid->title;

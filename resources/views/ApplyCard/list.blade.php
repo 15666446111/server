@@ -17,11 +17,11 @@
         <div class="swiper-wrapper">
             
             <div class="swiper-slide">
-                <img style="width: 100%; height: 200px;" src="https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=2307511656,3386189028&fm=26&gp=0.jpg" alt="申请信用卡">
+                <img style="width: 100%; height: 200px;" src="https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=2307511656,3386189028&fm=26&gp=0.jpg">
             </div>
             
             <div class="swiper-slide">
-                <img style="width: 100%; height: 200px;" src="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=2515911597,1913645471&fm=26&gp=0.jpg" alt="申请信用卡">
+                <img style="width: 100%; height: 200px;" src="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=2515911597,1913645471&fm=26&gp=0.jpg">
             </div>
 
         </div>
@@ -36,7 +36,7 @@
 
 		@foreach($list as $li)
 	  	<a href="/ApplyCard/detail/{{$info['merchant']}}/{{$info['ident']}}/{{$li->id}}" class="weui-grid js_grid">
-	    	<div class="weui-grid__icon"> <img src="{{ $li->getIcon() }}" alt="{{ $li->title }}"> </div>
+	    	<div class="weui-grid__icon"> <img src="{{ $li->getIcon() }}"> </div>
 	    	<p class="weui-grid__label bold"> {{ $li->title }} </p>
 	    	<p class="weui-grid__label"> <code>{{ $li->getPip() }}</code> </p>
 	    	<p class="weui-grid__label liheight"> {{ $li->getFirstLigHeight() }} </p>

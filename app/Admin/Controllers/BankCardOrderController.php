@@ -22,6 +22,8 @@ class BankCardOrderController extends AdminController
     {
         return Grid::make(new BankCardOrder(['cards']), function (Grid $grid) {
             
+            $grid->model()->orderBy('id', 'desc');
+
             $grid->id->sortable();
             $grid->order_no->help('申请订单编号,唯一标识');
             $grid->column('cards.title', '标题');
@@ -33,7 +35,7 @@ class BankCardOrderController extends AdminController
             //$grid->column('cards.getpip()', '标题');
             //$grid->cards.getpip;
             //$grid->order_pic;
-            $grid->status->using([0 => '待审核', 1 => '通过', -1=>'拒绝'])->label([ 1 => 'success', -1 => 'danger']);
+            $grid->status->using([0 => '待审核', 1 => '通过', -1=>'拒绝'])->dot([ 1 => 'success', -1 => 'danger', 0=>'primary']);
             $grid->pay_money;
             $grid->verfity_time;
             $grid->order_remark;

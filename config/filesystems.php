@@ -79,6 +79,13 @@ return [
             'url' => env('APP_URL').'/storage/uploads',
         ],
 
+        'applyCards' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/uploads/applyCards'),
+            'visibility' => 'public',
+            'url' => env('APP_URL').'/storage/uploads/applyCards',
+        ],
+
         'points' => [
             'driver' => 'local',
             'root' => storage_path('app/public/uploads/points'),

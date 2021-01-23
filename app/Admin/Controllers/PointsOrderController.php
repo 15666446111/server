@@ -27,6 +27,8 @@ class PointsOrderController extends AdminController
 
             //$grid->model()->with(['products.banks']);
 
+            $grid->model()->orderBy('id', 'desc');
+            
             $grid->order_no;
 
             $grid->column('products.title', '产品');

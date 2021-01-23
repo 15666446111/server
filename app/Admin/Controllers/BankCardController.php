@@ -116,13 +116,15 @@ class BankCardController extends AdminController
     {
         return Form::make(new BankCard(), function (Form $form) {
 
+            $grid->model()->orderBy('id', 'desc');
+            
             $form->display('id');
 
             $form->text('title')->required()->help('申请办卡的银行或者卡标题');
 
-            $form->image('icon')->uniqueName()->help('银行的icon图标');
+            $form->image('icon')->disk('applyCards')->uniqueName()->help('银行的icon图标');
 
-            $form->image('card_images')->uniqueName()->help('展示在列表页面的图片');
+            $form->image('card_images')->disk('applyCards')->uniqueName()->help('展示在列表页面的图片');
 
             $form->currency('money')->symbol('￥')->required()->help('下卡达到标准后奖励的金额');
 
