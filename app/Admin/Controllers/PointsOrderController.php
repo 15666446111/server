@@ -2,16 +2,14 @@
 
 namespace App\Admin\Controllers;
 
-use App\Admin\Repositories\PointsOrder;
 use Dcat\Admin\Form;
 use Dcat\Admin\Grid;
 use Dcat\Admin\Show;
+use App\PointsOrder as PointsOrderM;
+use App\Admin\Repositories\PointsOrder;
 use Dcat\Admin\Controllers\AdminController;
 
-use App\PointsOrder as PointsOrderM;
-
-class PointsOrderController extends AdminController
-{
+class PointsOrderController extends AdminController{
     /**
      * Make a grid builder.
      *

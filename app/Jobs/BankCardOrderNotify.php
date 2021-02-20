@@ -11,8 +11,8 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 
-class BankCardOrderNotify implements ShouldQueue
-{
+class BankCardOrderNotify implements ShouldQueue{
+
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     /**
@@ -49,9 +49,10 @@ class BankCardOrderNotify implements ShouldQueue
      *
      * @return void
      */
-    public function __construct(BankCardOrder $bankCardOrder)
-    {
+    public function __construct(BankCardOrder $bankCardOrder){
+
         $this->bankCardOrder = $bankCardOrder;
+
     }
 
     /**
@@ -95,7 +96,7 @@ class BankCardOrderNotify implements ShouldQueue
             'pip'       =>  $this->bankCardOrder->cards->getPip(),
             'card_pic'  =>  $this->bankCardOrder->cards->card_images,
             'ident'     =>  $this->bankCardOrder->ident,
-            'merchant'  =>  $this->bankCardOrder->merchant,
+            'agent_id'  =>  $this->bankCardOrder->merchant,
         );
 
         // 如果是审核通知

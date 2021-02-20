@@ -45,9 +45,9 @@ class HandleBankcardForm extends Form
         BankCardOrderNotify::dispatch($info)->onQueue('small_server_apply_bankcard_notify');
     }
 
+    //
+    public function form(){
 
-    public function form()
-    {
         $this->hidden('id');
 
         $this->select('state', '操作')->options([1=> '通过审核', -1=>'审核拒绝'])->required();
@@ -59,8 +59,8 @@ class HandleBankcardForm extends Form
     }
 
     // 返回表单数据，如不需要可以删除此方法
-    public function default()
-    {
+    public function default(){
+
         $info = \App\BankCardOrder::where('id', $this->id)->first();
 
         return [ 'id' =>  $this->id ,'real_money' => $info->order_money ];

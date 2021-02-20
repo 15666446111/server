@@ -116,7 +116,7 @@ class BankCardController extends AdminController
     {
         return Form::make(new BankCard(), function (Form $form) {
 
-            $grid->model()->orderBy('id', 'desc');
+            $form->model()->orderBy('id', 'desc');
             
             $form->display('id');
 
