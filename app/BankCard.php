@@ -65,7 +65,7 @@ class BankCard extends Model
      */
     public function getCardImages()
     {
-        return config('app.url').'/storage/uploads/'.$this->card_images;
+        return config('app.url').'/storage/uploads/applyCards/'.$this->card_images;
     }
 
     /**
