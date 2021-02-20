@@ -79,7 +79,7 @@ class BankCard extends Model
      */
     public function getIcon()
     {
-        return config('app.url').'/storage/uploads/'.$this->icon;
+        return config('app.url').'/storage/uploads/applyCards/'.$this->icon;
     }
 
     /**

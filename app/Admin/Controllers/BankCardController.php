@@ -11,6 +11,8 @@ use Dcat\Admin\Controllers\AdminController;
 class BankCardController extends AdminController
 {
     /**
+     * http://www.op-server.com/storage/uploads/applyCards/images/748bd6395923458f3c9f38cc00e76a18.png
+     * http://www.op-server.com/storage/uploads/applyCards/images/79f9c1735bce4ad5b9c0a46e0dc785ee.jpg
      * Make a grid builder.
      *
      * @return Grid
@@ -23,9 +25,9 @@ class BankCardController extends AdminController
 
             $grid->title->help('测试这个功能');
 
-            $grid->icon->image('', 40);
+            $grid->icon->image(config('app.url').'/storage/uploads/applyCards/', 40);
 
-            $grid->card_images->image('', 60);
+            $grid->card_images->image(config('app.url').'/storage/uploads/applyCards/', 60);
 
             $grid->money;
 
