@@ -112,19 +112,19 @@ class MerchantSettingController extends AdminController
 
             })->tab('聚合费率', function (Form $form) {
 
-                $form->rate('debit_fee', '借记卡费率(万分位)');
-                $form->rate('debit_fee_limit', '借记卡封顶(单位:分)');
-                $form->rate('credit_fee', '贷记卡费率(万分位)');
+                $form->rate('debit_fee', '借记卡费率(万分位)')->default(0);
+                $form->rate('debit_fee_limit', '借记卡封顶(单位:分)')->default(0);
+                $form->rate('credit_fee', '贷记卡费率(万分位)')->default(0);
 
-                $form->rate('d0_fee', 'D0额外手续费率(万分位)');
-                $form->rate('d0_fee_quota', 'D0额外定额手续费(单位:分)');
+                $form->rate('d0_fee', 'D0额外手续费率(万分位)')->default(0);
+                $form->rate('d0_fee_quota', 'D0额外定额手续费(单位:分)')->default(0);
 
-                $form->rate('union_credit_fee', '云闪付贷记卡费率(万分位)');
-                $form->rate('union_debit_fee', '云闪付借记卡费率(万分位)');
+                $form->rate('union_credit_fee', '云闪付贷记卡费率(万分位)')->default(0);
+                $form->rate('union_debit_fee', '云闪付借记卡费率(万分位)')->default(0);
 
-                $form->rate('ali_fee', '支付宝费率(万分位)');
+                $form->rate('ali_fee', '支付宝费率(万分位)')->default(0);
 
-                $form->rate('wx_fee', '微信费率(万分位)');
+                $form->rate('wx_fee', '微信费率(万分位)')->default(0);
 
                 //$form->slider('wx_fee', '微信费率(万分位)')->options(['max' => 100, 'min' => 30, 'step' => 1]);
             });
