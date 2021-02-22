@@ -42,7 +42,7 @@ class HandleBankcardForm extends Form
 
         $info->save();
 
-        BankCardOrderNotify::dispatch($info)->onQueue('small_server_apply_bankcard_notify');
+        BankCardOrderNotify::dispatch($info)->onQueue('ApplyCardNotify');
     }
 
     //

@@ -66,11 +66,13 @@ return [
             'block_for' => null,
         ],
 
-        // 办卡通知的队列
+        /**
+         * 办卡通知的队列
+         */
         'redis' => [
             'driver'        => 'redis',
             'connection'    => 'bankcardNotify',
-            'queue'         => 'small_server_apply_bankcard_notify',
+            'queue'         => 'ApplyCardNotify',
             'retry_after'   => 300,
             'block_for'     => null,
         ],

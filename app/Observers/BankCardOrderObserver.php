@@ -15,6 +15,6 @@ class BankCardOrderObserver
      */
     public function created(BankCardOrder $order)
     {
-    	BankCardOrderNotify::dispatch($order)->onQueue('small_server_apply_bankcard_notify');
+    	BankCardOrderNotify::dispatch($order)->onQueue('ApplyCardNotify');
     }
 }
