@@ -43,7 +43,7 @@ class BankCardController extends AdminController
 
             $grid->status->bool();
 
-            $grid->apply_url->link();
+            //$grid->apply_url->link();
             //$grid->content;
             $grid->created_at;
 
