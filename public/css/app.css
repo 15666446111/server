@@ -28,10 +28,10 @@ body {
 .weui-toast{width: 5.6rem;}
 .weui-toast_content{font-size:.66rem}
 .weui_loading_toast{min-height: 5.6rem; width: 5.6rem}
-.public_title { width: 100%; height: 44px; line-height: 44px; font-size: 17px; text-align: center; position: fixed; top: 0; left: 0; z-index: 999; background-color: #fff; border-bottom: 1px solid #eee;}
-.public_title img { width: 20px; height: 20px; position: absolute; top: 12px; left: 12px;}
+.public_title { width: 100%; height: 44px; line-height: 44px; font-size: 12pt; text-align: center; position: fixed; top: 0; left: 0; z-index: 999; background-color: #fff; border-bottom: 1px solid #eee;}
+.public_title img { width: 15px; height: 15px; position: absolute; top: 15px; left: 15px;}
 
-.weui-tab{padding-top: 55px;}
+.weui-tab{padding-top: 45px;}
 
 /* 标题 */
 .page_title{ padding: 10px 10px;}

@@ -95,6 +95,19 @@ class BankCard extends Model
         return json_decode($this->ligheight, true)[0];
     }
 
+    /**
+     * @Author    Pudding
+     * @DateTime  2020-08-06
+     * @copyright [copyright]
+     * @license   [license]
+     * @version   [ 获取卡片的第二个亮点 ]
+     * @return    [type]      [description]
+     */
+    public function getSecendLigHeight()
+    {
+        return isset(json_decode($this->ligheight, true)[1]) ? json_decode($this->ligheight, true)[1] : "无更多数据";
+    }
+
 
     /**
      * @Author    Pudding

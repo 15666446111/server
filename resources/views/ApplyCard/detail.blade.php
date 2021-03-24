@@ -25,7 +25,9 @@
             <img src="{{ $card->getCardImages() }}" alt="{{ $card->title }}">
             <div class="t">
                 <p class="bank-detail-title">{{ $card->title }}</p>
+                @if($showprice == 'y')
                 <p class="bank-detail-pip">{{ $card->getPip() }} 奖励 <span class="text-red">{{ $card->getMoneyFormat() }}</span>元</p>
+                @endif
                 <p class="bank-detail-ligheight">
                 	@foreach($card->getLigHeight() as $h)
                     <span class="bor">{{ $h }}</span>
