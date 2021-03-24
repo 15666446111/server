@@ -51,7 +51,7 @@ class BankCardController extends Controller
 	 */
 	public function cardList(Request $request)
 	{
-		$showprice = (!$request->showprice or $request->showprice != "y") ? 'n' : "y";
+		$showprice = (!$request->showprice or $request->showprice != "n") ? 'y' : "n";
 
 		$list = \App\BankCard::where('status', 1)->orderBy('sort', 'desc')->get();
 
@@ -74,7 +74,7 @@ class BankCardController extends Controller
 	{
 		if(!$request->cid) abort(404);
 
-		$showprice = (!$request->showprice or $request->showprice != "y") ? 'n' : "y";
+		$showprice = (!$request->showprice or $request->showprice != "n") ? 'y' : "n";
 
 		$card = \App\BankCard::where('status', 1)->where('id', $request->cid)->first();
 
